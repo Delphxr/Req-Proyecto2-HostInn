@@ -3,7 +3,7 @@
 }
 
 .darken{
-    filter: brightness(70%);
+    filter: brightness(50%);
 }
 
 .lighten{
@@ -28,4 +28,11 @@
     border-radius: 50%;
     display: inline-block;
     position: relative;
+  }
+
+
+  .center {
+    left: 50%;
+    margin-left: -25%;
+    top: 20%;
   }
