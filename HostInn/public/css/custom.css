@@ -1,32 +1,31 @@
-.icon-host {
-    background-image: url("C:/Luis Oswaldo/TEC/Semestres/4to-Semestre/Req/P2/Programa/Req-Proyecto2-HostInn/HostInn/public/css/custom.css") !important;
-
-    background-position: center center;
-    background-size: cover;
-    display: inline-block;
-    height: 50px;
-    width: 50px;
+.invert{
+    filter: invert(100%);
 }
 
-.icon-car {
-    background-image: url("http://cdn5.iconfinder.com/data/icons/Symbolicons_Transportation/24/Car.png");
-    background-position: center center;
-    background-size: cover;
-    display: inline-block;
-    height: 30px;
-    width: 30px;
+.darken{
+    filter: brightness(70%);
 }
 
-.logo-host{
-    background-image: url("C:/Luis Oswaldo/TEC/Semestres/4to-Semestre/Req/P2/Programa/Req-Proyecto2-HostInn/HostInn/public/css/custom.css") !important;
-    src: url("public/assets/hostInn.svg") !important;
-    background-position: center center;
-    background-size: cover;
-    display: inline-block;
-    height: 50px;
-    width: 50px;
+.lighten{
+    filter: brightness(130%);
 }
 
-.yellow-background-text {
-    background-color: yellow;
+.image-cover{
+    object-fit: cover;
+    background-size: cover; 
+    background-position: center;
+}
+
+.center {
+    background-position: center center;
+    position: relative;
+}
+
+.dot {
+    height: 25px;
+    width: 25px;
+    background-color: #ffda3e;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
   }
