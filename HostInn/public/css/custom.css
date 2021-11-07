@@ -1,18 +1,18 @@
-.invert{
+.invert {
     filter: invert(100%);
 }
 
-.darken{
+.darken {
     filter: brightness(50%);
 }
 
-.lighten{
+.lighten {
     filter: brightness(130%);
 }
 
-.image-cover{
+.image-cover {
     object-fit: cover;
-    background-size: cover; 
+    background-size: cover;
     background-position: center;
 }
 
@@ -28,17 +28,42 @@
     border-radius: 50%;
     display: inline-block;
     position: relative;
-  }
+}
 
-
-  .center {
+.center {
     left: 50%;
     margin-left: -25%;
     top: 20%;
-  }
+}
 
-  .parallax {
+.parallax {
+    position: fixed;
+}
 
+.shadoww {
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.486);
+}
 
-    position:fixed;
-  }
+.bgimg-1, .bgimg-2, .bgimg-3 {
+    position: relative;
+    opacity: 1;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.bgimg-1 {
+    background-image: url("img_parallax.jpg");
+    min-height: 100%;
+}
+
+.bgimg-2 {
+    background-image: url("http://localhost:3000/public/assets/beach.jpg");
+    min-height: 40vh;
+}
+
+.bgimg-3 {
+    background-image: url("http://localhost:3000/public/assets/mountain.jpg");
+    min-height: 40vh;
+}
