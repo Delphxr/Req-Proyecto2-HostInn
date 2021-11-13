@@ -316,7 +316,7 @@ const selectReceptionist = function(err){
 }
 
 // Seleccionar recepcionistas por reserva
-const selectHighManagers = function(err){
+const selectHighManagersReserve = function(err){
   dbConn.query("SELECT Recepcionista_IdRecepcionista, Reserva_IdReserva FROM Recepcionista_has_Reserva", function (err, result, fields) {
     if (err) throw err;
       console.log(result);
