@@ -32,7 +32,16 @@ app.get('/', function (req, res) {
 
 // sitio habitaciones
 app.get('/rooms', function (req, res) {
-    res.render(path.join(__dirname + '/views/test.ejs'));
+
+        
+    var hotel = {nombre: "Hotel el Pepe",  ubicacion: "Playa Sucia", estrellas: 5, Descripcion: "este es un hotel", rutaImagen:"https://picsum.photos/450/300", Estado:1}
+
+    var habitaciones = [
+        {nombre: "Suite Matrimonial",  tipo: "Suite", camas: 1, capacidad: 3, Descripcion: "esta es una habitacion", rutaImagen:"https://picsum.photos/450/300", Estado:1},
+    ]
+
+    res.render(path.join(__dirname + '/views/pages/rooms.ejs'), 
+    {hotel:hotel, habitaciones:habitaciones});
     //__dirname : It will resolve to your project folder.
 });
 

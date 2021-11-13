@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head'); %>
+</head>
+
+<body>
+
+    <!-- navbar-->
+    <%- include('../partials/header'); %>
+
+
+
+        <div class="bgimg-3" style="background-image: url('<%= hotel.rutaImagen %>'); min-height: 60vh;"></div>
+
+
+
+        <!-- Section about -->
+        <section class="py-5 shadoww" id="about"
+            style="background-image:  linear-gradient(120deg, #ffda3e 0%, #ffd630 100%); ">
+            <div class="container px-4 py-5">
+
+                <h1 class="text-dark display-1 strong"><%= hotel.nombre %>:</h1>
+
+                <h4 class="lead" style=" position:relative; z-index: 50;">
+                    <%= hotel.Descripcion %>
+                </h4>
+
+            </div>
+
+
+        </section>
+
+
+
+
+        <!-- Section habitaciones-->
+        <section class="py-3 " id="hoteles"
+            style="background-image:  linear-gradient(120deg, #ffffff 0%, #ebedee 100%);">
+            <div class="container px-4 px-lg-5">
+
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
+                    style="transform: translateY(-75px);">
+
+
+
+
+
+
+                    <!--Aqui van las cartas con los hoteles-->
+
+                    <% habitaciones.forEach(function(habitacion) { %>
+                        <% if (hotel.Estado == 1) {%>
+                        <div class="col mb-5">
+                            <div class="card text-white bg-dark mb-3 shadoww border-0 rounded-0">
+                                <!-- Product image-->
+                                <img class="card-img-top rounded-0" src="<%= habitacion.rutaImagen %>"
+                                    alt="https://dummyimage.com/450x300/" />
+                                <!-- Product details-->
+                                <div class="card-body p-4 pb-0">
+                                    <div class="text-left">
+                                        <!-- Nombre-->
+                                        <h5 class="fw-bolder text-primary">
+                                            <%= habitacion.nombre %>
+                                        </h5>
+            
+                                        <p class="text-primary">Tipo: <span class="text-light"> <%= habitacion.tipo %></span> </p>
+                                            
+                                        <p class="text-primary">Camas: <span class="text-light"> <%= habitacion.camas %></span> </p>
+
+                                        <p class="text-primary">Capacidad: <span class="text-light"> <%= habitacion.capacidad %> personas</span> </p>
+
+                                            
+                                    </div>
+                                </div>
+
+                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                    <div class="text-left"><a class="btn btn-primary mt-auto" href="#">Reservar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+                    <% }); %>
+
+
+
+
+                </div>
+            </div>
+
+        </section>
+
+
+
+
+        <div class="bgimg-2 darken"></div>
+
+
+        
+
+
+
+
+
+
+        <!-- Footer-->
+        <%- include('../partials/footer'); %>
+
+
+</body>
+
+</html>
