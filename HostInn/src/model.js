@@ -90,7 +90,7 @@ const insertClient = function(err, nombre, apellidos, correo, nacionalidad, fech
   //var cedula = 123123
   //var nombre = "Max"
   //var fecha =  
-  var sql = "INSERT INTO Cliente (Nombre, Apellidos, Correo, Nacionalidad, FechaNacimiento, Cuenta_IdCuenta) VALUES ("+ nombre +"," + apellidos + "," + correo + "," + nacionalidad + "," + fecha + "," + cuenta +")";
+  var sql = "INSERT INTO Cliente (Nombre, Apeliidos, Correo, Nacionalidad, FechaNacimiento, Cuenta_IdCuenta) VALUES ("+ nombre +"," + apellidos + "," + correo + "," + nacionalidad + "," + fecha + "," + cuenta +")";
     dbConn.query(sql, function (err, result) {
       if (err) throw err;
         console.log("1 record inserted");
@@ -229,7 +229,7 @@ const selectAdmin = function(err){
 
 // Seleccionar clientes
 const selectCliente = function(err){
-  dbConn.query("SELECT IdCliente, Nombre, Apellidos, Correo, Nacionalidad, FechaNacimiento, Cuenta_IdCuenta FROM Cliente", function (err, result, fields) {
+  dbConn.query("SELECT IdCliente, Nombre, Apeliidos, Correo, Nacionalidad, FechaNacimiento, Cuenta_IdCuenta FROM Cliente", function (err, result, fields) {
     if (err) throw err;
       console.log(result);
   });
@@ -316,7 +316,7 @@ const selectReceptionist = function(err){
 }
 
 // Seleccionar recepcionistas por reserva
-const selectHighManagers = function(err){
+const selectHighManagersReserve = function(err){
   dbConn.query("SELECT Recepcionista_IdRecepcionista, Reserva_IdReserva FROM Recepcionista_has_Reserva", function (err, result, fields) {
     if (err) throw err;
       console.log(result);
@@ -353,7 +353,7 @@ const updateAdmin = function(err, id, cedula, nombre, fecha){
 
 // Actualizar los datos de un cliente
 const updateClient = function(err, id, nombre, apellidos, correo, nacionalidad, fecha){
-  var sql = "UPDATE Cliente SET Nombre = " + nombre + ", Apellidos = " + apellidos +  ", Correo = " + correo + ", Nacionalidad = " + nacionalidad + ", FechaNacimiento = " + fecha + " WHERE IdCliente = " + id;
+  var sql = "UPDATE Cliente SET Nombre = " + nombre + ", Apeliidos = " + apellidos +  ", Correo = " + correo + ", Nacionalidad = " + nacionalidad + ", FechaNacimiento = " + fecha + " WHERE IdCliente = " + id;
   dbConn.query(sql, function (err, result) {
     if (err) throw err;
       console.log(result.affectedRows + " record(s) updated");
