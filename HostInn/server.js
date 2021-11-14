@@ -6,23 +6,82 @@ const app = express();
 app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(express.static("express"));
+app.use(express.urlencoded({
+    extended: true
+}))
 app.use("/public", express.static(__dirname + "/public"));
 app.use("/views", express.static(__dirname + "/views"));
 
-const router = require('./src/model')
+const router = require('./src/model');
+const { selectRoomsUnique } = require('./src/model');
+
+// variable para manejar los inicios de secion
+var sesion = { usuario: "", password: "", tipo: 0, activo: false }
 
 
 //-------------------------------- Controlamos las paginas ------------------------
+app.get('/', function (req, res) {
+    res.redirect('/homepage');});
+
+
+// pantalla de inicio de sesion / registro
+app.get('/log', function (req, res) {
+    if (sesion.activo == true) {res.redirect('/homepage');}
+    res.render(path.join(__dirname + '/views/pages/register.ejs'));
+});
+
+//al recibir un input de un form
+app.post('/login', (req, res) => {
+    const username = req.body.user
+    const password = req.body.password
+
+    const value = router.selectAccounts(function (err, data) {
+        var users = JSON.parse(JSON.stringify(data));
+        users.forEach(element => {
+            
+            if (element.Username == username && element.Contraseña == password) {
+                sesion.activo = true
+                sesion.usuario = username
+                sesion.password = password
+                sesion.tipo = 0
+                
+                res.redirect('/homepage');
+                
+            }
+        });
+        if (sesion.activo == false){ res.redirect('/log'); }
+        
+    })
+})
+
+app.get('/logout', function (req, res) {
+    console.log("logout")
+    sesion.usuario = ""
+    sesion.activo = false
+    sesion.tipo = 0
+    sesion.password = ""
+    res.redirect('/homepage');
+});
+
+//al recibir un input de un register
+app.post('/register', (req, res) => {
+    console.log(req.body)
+    res.redirect('/homepage');
+})
+
+
+
 
 // sitio por defecto del sitio web
-app.get('/', function (req, res) {
+app.get('/homepage', function (req, res) {
     // obtiene todos los hoteles registrados en la base de datos
     const value = router.selectHotels(function (err, data) {
         var hoteles = JSON.parse(JSON.stringify(data));
         // nota: se recomiendan imagenes con ratio de 3:2
-        console.log(hoteles)
+
+        console.log(sesion)
         res.render(path.join(__dirname + '/views/pages/homepage.ejs'),
-            { hoteles: hoteles });
+            { hoteles: hoteles, user: sesion });
         //__dirname : It will resolve to your project folder.
     });
 });
@@ -39,28 +98,25 @@ app.get('/rooms/:hotelId', function (req, res) {
 
         var hotel = habitaciones[0]
 
-        if (habitaciones.length == 0){
-            hotel = {nombreHotel: 'HOTEL VACIO',
-            descripcionHotel: 'Este hotel no posee habitaciones!',
-            rutaImagen: ""}
+        if (habitaciones.length == 0) {
+            hotel = {
+                nombreHotel: 'HOTEL VACIO',
+                descripcionHotel: 'Este hotel no posee habitaciones!',
+                rutaImagen: ""
+            }
         }
 
         // nota: se recomiendan imagenes con ratio de 3:2
-        console.log(habitaciones,hotel)
+        console.log(habitaciones, hotel)
         res.render(path.join(__dirname + '/views/pages/rooms.ejs'),
             { hotel: hotel, habitaciones: habitaciones });
         //__dirname : It will resolve to your project folder.
-    },hotelId);
+    }, hotelId);
 
 });
 
 
-app.get('/login', function (req, res) {
 
-
-    res.render(path.join(__dirname + '/views/pages/register.ejs'));
-
-});
 // -------------------------------------------------------------------------------
 
 

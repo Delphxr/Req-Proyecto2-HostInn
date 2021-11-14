@@ -30,11 +30,20 @@
 
             </ul>
 
-
-            <button class="btn btn-outline-primary" type="submit">
-                <i class="bi-person-fill me-1"></i>
-                Login
-            </button>
+            <% if (user.activo == true) {%>
+                <a class="btn btn-outline-primary" href="/logout" >
+                    <i class="bi-person-fill me-1"></i>
+                    <%= user.usuario %>
+                </a>
+                
+            <% } else { %>
+                <a class="btn btn-outline-primary" href="/log" >
+                    <i class="bi-person-fill me-1"></i>
+                    Login
+                </a>
+                
+            <% } %>
+            
 
 
         </div>
