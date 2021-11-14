@@ -36,10 +36,18 @@ app.get('/rooms/:hotelId', function (req, res) {
 
     const value = router.selectRoomsUnique(function (err, data) {
         var habitaciones = JSON.parse(JSON.stringify(data));
-        var hotel = { nombre: "el id del hotel es: " + hotelId, ubicacion: "Playa Sucia", estrellas: 5, Descripcion: "este es un hotel", rutaImagen: "https://picsum.photos/450/300", Estado: 1 }
+
+        var hotel = habitaciones[0]
+
+        if (habitaciones.length == 0){
+            console.log("kfudsfk")
+            hotel = {nombreHotel: 'HOTEL VACIO',
+            descripcionHotel: 'Este hotel no posee habitaciones!',
+            rutaImagen: ""}
+        }
 
         // nota: se recomiendan imagenes con ratio de 3:2
-        console.log(habitaciones)
+        console.log(habitaciones,hotel)
         res.render(path.join(__dirname + '/views/pages/rooms.ejs'),
             { hotel: hotel, habitaciones: habitaciones });
         //__dirname : It will resolve to your project folder.

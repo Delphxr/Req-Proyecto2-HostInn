@@ -105,11 +105,11 @@ function selectRooms (callback){
 
 // Seleccionar habitaciones pod hotel
 function selectRoomsUnique (callback, idHotel){
-  dbConn.query("SELECT IdHabitacion, Nombre, Tipo, Num_Camas, Capacidad, Descripcion, Precio, Estado, Hotel_IdHotel FROM Habitacion WHERE Hotel_IdHotel = " + idHotel, function (err, result) {
+  dbConn.query("SELECT IdHabitacion, h.Nombre, Tipo, Num_Camas, Capacidad, h.Descripcion, Precio, h.Estado, Hotel_IdHotel, a.Nombre as nombreHotel, a.Descripcion as descripcionHotel FROM Habitacion h INNER JOIN Hotel a ON h.Hotel_IdHotel = a.IdHotel WHERE Hotel_IdHotel =" + idHotel, function (err, result) {
   if (err)
     callback(err, null);
   else
-    callback(null,result);
+      callback(null,result);    
   });
 };
 
