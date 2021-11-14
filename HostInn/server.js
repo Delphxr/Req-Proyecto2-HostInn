@@ -17,11 +17,12 @@ const router = require('./src/model')
 // sitio por defecto del sitio web
 app.get('/', function (req, res) {
     // obtiene todos los hoteles registrados en la base de datos
-    const value = router.selectHotels(function(err,data){
+    const value = router.selectHotels(function (err, data) {
         var hoteles = JSON.parse(JSON.stringify(data));
         // nota: se recomiendan imagenes con ratio de 3:2
-        res.render(path.join(__dirname + '/views/pages/homepage.ejs'), 
-        {hoteles:hoteles});
+        console.log(hoteles)
+        res.render(path.join(__dirname + '/views/pages/homepage.ejs'),
+            { hoteles: hoteles });
         //__dirname : It will resolve to your project folder.
     });
 });
@@ -32,20 +33,28 @@ app.get('/', function (req, res) {
 app.get('/rooms/:hotelId', function (req, res) {
 
     var hotelId = req.params.hotelId
-        
-    var hotel = {nombre: "el id del hotel es: " + hotelId,  ubicacion: "Playa Sucia", estrellas: 5, Descripcion: "este es un hotel", rutaImagen:"https://picsum.photos/450/300", Estado:1}
 
-    var habitaciones = [
-        {nombre: "Suite Matrimonial",  tipo: "Suite", camas: 1, capacidad: 3, Descripcion: "esta es una habitacion", rutaImagen:"https://picsum.photos/450/300", Estado:1},
-        {nombre: "Suite Matrimonial",  tipo: "Suite", camas: 1, capacidad: 3, Descripcion: "esta es una habitacion", rutaImagen:"https://picsum.photos/450/300", Estado:1}
-    ]
+    const value = router.selectRoomsUnique(function (err, data) {
+        var habitaciones = JSON.parse(JSON.stringify(data));
+        var hotel = { nombre: "el id del hotel es: " + hotelId, ubicacion: "Playa Sucia", estrellas: 5, Descripcion: "este es un hotel", rutaImagen: "https://picsum.photos/450/300", Estado: 1 }
 
-    res.render(path.join(__dirname + '/views/pages/rooms.ejs'), 
-    {hotel:hotel, habitaciones:habitaciones});
+        // nota: se recomiendan imagenes con ratio de 3:2
+        console.log(habitaciones)
+        res.render(path.join(__dirname + '/views/pages/rooms.ejs'),
+            { hotel: hotel, habitaciones: habitaciones });
+        //__dirname : It will resolve to your project folder.
+    },hotelId);
+
+
+
+
+
+
+
     //__dirname : It will resolve to your project folder.
 });
 
- // -------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------
 
 
 

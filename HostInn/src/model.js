@@ -103,6 +103,16 @@ function selectRooms (callback){
   });
 };
 
+// Seleccionar habitaciones pod hotel
+function selectRoomsUnique (callback, idHotel){
+  dbConn.query("SELECT IdHabitacion, Nombre, Tipo, Num_Camas, Capacidad, Descripcion, Precio, Estado, Hotel_IdHotel FROM Habitacion WHERE Hotel_IdHotel = " + idHotel, function (err, result) {
+  if (err)
+    callback(err, null);
+  else
+    callback(null,result);
+  });
+};
+
 // Seleccionar metodos de pago
 function selectMethod (callback){
   dbConn.query("SELECT IdMetodo, Tipo FROM 'metodo de pago'", function (err, result) {
@@ -489,6 +499,7 @@ module.exports = {
   selectHighManagers,
   selectHighManagersXHotel,
   selectRooms,
+  selectRoomsUnique,
   selectMethod,
   selectMethodXClient,
   selectReceptionist,

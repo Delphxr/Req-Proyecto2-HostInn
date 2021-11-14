@@ -51,25 +51,25 @@
                     <!--Aqui van las cartas con los hoteles-->
 
                     <% habitaciones.forEach(function(habitacion) { %>
-                        <% if (hotel.Estado == 1) {%>
+                        <% if (habitacion.Estado == 1) {%>
                         <div class="col mb-5">
                             <div class="card text-white bg-dark mb-3 shadoww border-0 rounded-0">
                                 <!-- Product image-->
-                                <img class="card-img-top rounded-0" src="<%= habitacion.rutaImagen %>"
-                                    alt="https://dummyimage.com/450x300/" height="200"/>
+                                <img class="card-img-top rounded-0 image-cover" src="<%= habitacion.rutaImagen %>"
+                                    alt="https://dummyimage.com/450x300/" height="200" style="background-image: url(https://dummyimage.com/450x400/);"/>
                                 <!-- Product details-->
                                 <div class="card-body p-4 pb-0">
                                     <div class="text-left">
                                         <!-- Nombre-->
                                         <h5 class="fw-bolder text-primary">
-                                            <%= habitacion.nombre %>
+                                            <%= habitacion.Nombre %>
                                         </h5>
             
-                                        <p class="text-primary">Tipo: <span class="text-light"> <%= habitacion.tipo %></span> </p>
+                                        <p class="text-primary">Tipo: <span class="text-light"> <%= habitacion.Tipo %></span> </p>
                                             
-                                        <p class="text-primary">Camas: <span class="text-light"> <%= habitacion.camas %></span> </p>
+                                        <p class="text-primary">Camas: <span class="text-light"> <%= habitacion.Num_Camas %></span> </p>
 
-                                        <p class="text-primary">Capacidad: <span class="text-light"> <%= habitacion.capacidad %> personas</span> </p>
+                                        <p class="text-primary">Capacidad: <span class="text-light"> <%= habitacion.Capacidad %> personas</span> </p>
 
                                             
                                     </div>
