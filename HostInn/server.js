@@ -40,7 +40,6 @@ app.get('/rooms/:hotelId', function (req, res) {
         var hotel = habitaciones[0]
 
         if (habitaciones.length == 0){
-            console.log("kfudsfk")
             hotel = {nombreHotel: 'HOTEL VACIO',
             descripcionHotel: 'Este hotel no posee habitaciones!',
             rutaImagen: ""}
@@ -53,15 +52,15 @@ app.get('/rooms/:hotelId', function (req, res) {
         //__dirname : It will resolve to your project folder.
     },hotelId);
 
-
-
-
-
-
-
-    //__dirname : It will resolve to your project folder.
 });
 
+
+app.get('/login', function (req, res) {
+
+
+    res.render(path.join(__dirname + '/views/pages/register.ejs'));
+
+});
 // -------------------------------------------------------------------------------
 
 
