@@ -13,6 +13,16 @@ function selectHotels (callback){
   });
 };
 
+// Selecciona un hoteles por id
+function selectHotelUnique (callback, id){
+  dbConn.query("SELECT IdHotel, Nombre, Estrellas, Descripcion, Ubicación, Estado FROM Hotel WHERE Idhotel = " + id, function(err, result){
+  if (err) 
+    callback(err,null);
+  else
+    callback(null,result);
+  });
+};
+
 // Seleccionar administradores
 function selectAdmin (callback){
   dbConn.query("SELECT IdAdministrador, Cedula, Nombre, FechaContratacion, Cuenta_IdCuenta FROM Administrador", function (err, result) {
@@ -483,5 +493,6 @@ module.exports = {
   selectMethodXClient,
   selectReceptionist,
   selectReceptionistReserve,
-  selectReservation
+  selectReservation,
+  selectHotelUnique
 }
