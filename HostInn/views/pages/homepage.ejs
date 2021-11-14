@@ -62,8 +62,8 @@
                         <div class="col mb-5">
                             <div class="card text-white bg-dark mb-3 shadoww border-0 rounded-0">
                                 <!-- Product image-->
-                                <img class="card-img-top rounded-0" src="<%= hotel.rutaImagen %>"
-                                    alt="https://dummyimage.com/450x300/" />
+                                <img class="card-img-top rounded-0 image-cover" src="<%= hotel.rutaImagen %>"
+                                    alt="https://dummyimage.com/450x400/" height="200"/>
                                 <!-- Product details-->
                                 <div class="card-body p-4">
                                     <div class="text-left">
@@ -84,7 +84,7 @@
                                 </div>
 
                                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                    <div class="text-left"><a class="btn btn-primary mt-auto" href="/rooms">Reservar</a>
+                                    <div class="text-left"><a class="btn btn-primary mt-auto" href="/rooms/<%= hotel.id %>">Reservar</a>
                                     </div>
                                 </div>
                             </div>
