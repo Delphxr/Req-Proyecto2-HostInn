@@ -45,7 +45,7 @@ function selectClient (callback){
 
 // Seleccionar cuentas
 function selectAccounts (callback){
-  dbConn.query("SELECT IdCuenta, Username, Contraseña, Estado FROM Cuenta", function (err, result) {
+  dbConn.query("SELECT IdCuenta, Username, Contraseña, Estado, Categoria_IdCategoria FROM Cuenta", function (err, result) {
   if (err)
     callback(err, null);
   else
@@ -173,6 +173,25 @@ function selectReservation (callback){
   }); 
 }; 
 
+//Seleccionar cuentas con información
+function selectHighManagers (callback){
+  dbConn.query("SELECT c.IdCuenta,c.Username,c.Contraseña,", function (err, result) {
+  if (err)
+    callback(err, null);
+  else
+    callback(null,result);
+  });
+};
+
+//Seleccionar categorias
+function selectCategories (callback){
+  dbConn.query("SELECT IdCategoria, Categoria FROM categoria", function (err, result, fields) {
+  if (err)
+    callback(err, null);
+  else
+    callback(null,result);
+  });
+};
 module.exports = {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // COMPLEMENTARIOS
@@ -272,10 +291,10 @@ module.exports = {
     },
 
   // Insertar una nueva cuenta
-  insertCuenta: function(err, user, contrasenia){
+  insertCuenta: function(err, user, contrasenia, categoria){
     //var user = "'a'"
     //var contrasenia = "'asd'"
-    var sql = "INSERT INTO Cuenta (Username, Contraseña) VALUES ("+ user +"," + contrasenia + ")";
+    var sql = "INSERT INTO Cuenta (Username, Contraseña,Categoria_IdCategoria) VALUES ("+ user +"," + contrasenia + ","+ categoria +")";
       dbConn.query(sql, function (err, result) {
         if (err) throw err;
           console.log("1 record inserted");
@@ -412,8 +431,8 @@ module.exports = {
   },
 
   // Actualizar los datos de una cuenta
-  updateAccount: function(err, id, username, contrasenia){
-    var sql = "UPDATE Cuenta SET Username = " + user + ", Contraseña = " + contrasenia + " WHERE IdCuenta = " + id;
+  updateAccount: function(err, id, username, contrasenia, categoria){
+    var sql = "UPDATE Cuenta SET Username = " + username + ", Contraseña = " + contrasenia + ", Categoria_IdCategoria = "+ categoria +" WHERE IdCuenta = " + id;
     dbConn.query(sql, function (err, result) {
       if (err) throw err;
         console.log(result.affectedRows + " record(s) updated");
@@ -500,6 +519,7 @@ module.exports = {
         console.log(result.affectedRows + " record(s) updated");
       });
   },
+
   selectHotels,
   selectAdmin,
   selectClient,
@@ -516,5 +536,6 @@ module.exports = {
   selectReceptionist,
   selectReceptionistReserve,
   selectReservation,
-  selectHotelUnique
+  selectHotelUnique,
+  selectCategories
 }
