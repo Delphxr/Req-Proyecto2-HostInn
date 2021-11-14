@@ -9,6 +9,8 @@ app.use(express.static("express"));
 app.use("/public", express.static(__dirname + "/public"));
 app.use("/views", express.static(__dirname + "/views"));
 
+const router = require('./src/model')
+
 
 //-------------------------------- Controlamos las paginas ------------------------
 
@@ -60,7 +62,5 @@ app.get('/rooms/:hotelId', function (req, res) {
 const server = http.createServer(app);
 const port = 3000;
 server.listen(port);
-
-const router = require('./src/router')
 
 console.debug('Server listening on port ' + port);
