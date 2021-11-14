@@ -109,13 +109,26 @@ app.get('/rooms/:hotelId', function (req, res) {
         // nota: se recomiendan imagenes con ratio de 3:2
         console.log(habitaciones, hotel)
         res.render(path.join(__dirname + '/views/pages/rooms.ejs'),
-            { hotel: hotel, habitaciones: habitaciones });
+            { hotel: hotel, habitaciones: habitaciones,user: sesion });
         //__dirname : It will resolve to your project folder.
     }, hotelId);
 
 });
 
+// pagina de reservar habitacion
+app.get('/reserve/:roomId', function (req, res) {
 
+    var roomId = req.params.roomId
+
+    const value = router.selectOneRoom(function (err, data) {
+        var habitacion = JSON.parse(JSON.stringify(data));
+
+        console.log("aaaaaaaaaaaaaaaaaaaaaaaaa")
+        console.log(habitacion)
+        res.redirect('/homepage');
+    }, roomId);
+
+});
 
 // -------------------------------------------------------------------------------
 
