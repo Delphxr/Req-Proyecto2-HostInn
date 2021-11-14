@@ -1,5 +1,148 @@
 const dbConn = require('../config/db.config');
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// SELECT
+
+// Selecciona los hoteles 
+function selectHotels (callback){
+  dbConn.query('SELECT IdHotel, Nombre, Estrellas, Descripcion, Ubicación, Estado FROM Hotel', function(err, result){
+  if (err) 
+    callback(err,null);
+  else
+    callback(null,result);
+  });
+};
+
+// Seleccionar administradores
+function selectAdmin (callback){
+  dbConn.query("SELECT IdAdministrador, Cedula, Nombre, FechaContratacion, Cuenta_IdCuenta FROM Administrador", function (err, result) {
+  if (err)
+    callback(err, null);
+  else
+    callback(null,result);
+  });
+};
+
+// Seleccionar clientes
+function selectClient (callback){
+  dbConn.query("SELECT IdCliente, Nombre, Apeliidos, Correo, Nacionalidad, FechaNacimiento, Cuenta_IdCuenta FROM Cliente", function (err, result) {
+  if (err)
+    callback(err, null);
+  else
+    callback(null,result);
+  });
+};
+
+// Seleccionar cuentas
+function selectAccounts (callback){
+  dbConn.query("SELECT IdCuenta, Username, Contraseña, Estado FROM Cuenta", function (err, result) {
+  if (err)
+    callback(err, null);
+  else
+    callback(null,result);
+  });
+};
+
+// Seleccionar facturas
+function selectCheck (callback){
+  dbConn.query("SELECT NumFactura, Descripcion, Fecha, Total, Reserva_IdReserva FROM Factura", function (err, result) {
+  if (err)
+    callback(err, null);
+  else
+    callback(null,result);
+  });
+};
+
+// Seleccionar gerente
+function selectManagers (callback){
+  dbConn.query("SELECT IdGerente, Descripcion, Hotel_IdHotel, Administrador_IdAdministrador FROM Cuenta", function (err, result) {
+  if (err)
+    callback(err, null);
+  else
+    callback(null,result);
+  });
+};
+
+// Seleccionar gerentes de alto nivel
+function selectHighManagers (callback){
+  dbConn.query("SELECT IdGerente_Alto_Nivel, Descripcion, Administradro_IdAdministrador FROM Gerente_Alto_Nivel", function (err, result) {
+  if (err)
+    callback(err, null);
+  else
+    callback(null,result);
+  });
+};
+
+// Seleccionar gerentes de alto nivel por hotel
+function selectHighManagersXHotel (callback){
+  dbConn.query("SELECT Gerente_Alto_Nivel_IdGerente_Alto_Nivel, Hotel_IdHotel FROM Gerente_Alto_Nivel_has_Hotel", function (err, result) {
+  if (err)
+    callback(err, null);
+  else
+    callback(null,result);
+  });
+};
+
+// Seleccionar habitaciones
+function selectRooms (callback){
+  dbConn.query("SELECT IdHabitacion, Nombre, Tipo, Num_Camas, Capacidad, Descripcion, Precio, Estado, Hotel_IdHotel FROM Habitacion", function (err, result) {
+  if (err)
+    callback(err, null);
+  else
+    callback(null,result);
+  });
+};
+
+// Seleccionar metodos de pago
+function selectMethod (callback){
+  dbConn.query("SELECT IdMetodo, Tipo FROM 'metodo de pago'", function (err, result) {
+  if (err)
+    callback(err, null);
+  else
+    callback(null,result);
+  });
+};
+
+// Seleccionar metodo de pago por cliente
+function selectMethodXClient (callback){
+  dbConn.query("SELECT Cliente_IdCliente, 'Metodo de pago_IdMetodo' FROM 'metodo de pago_has_cliente'", function (err, result) {
+  if (err)
+    callback(err, null);
+  else
+    callback(null,result);
+  });
+};
+
+// Seleccionar recepcionistas 
+function selectReceptionist (callback){ 
+  dbConn.query("SELECT IdRecepcionista, Descripcion, Hotel_IdHotel, Administrador_IdAdministrador FROM Recepcionista", function (err, result, fields) { 
+  if (err) 
+    callback(err, null); 
+  else 
+    callback(null,result); 
+  }); 
+}; 
+
+// Seleccionar recepcionistas por reserva 
+function selectReceptionistReserve (callback){ 
+  dbConn.query("SELECT Recepcionista_IdRecepcionista, Reserva_IdReserva FROM Recepcionista_has_Reserva", function (err, result, fields) { 
+  if (err) 
+    callback(err, null); 
+  else 
+    callback(null,result); 
+  }); 
+}; 
+
+// Seleccionar reserva 
+function selectReservation (callback){ 
+  dbConn.query("SELECT IdReserva, FehcaInicio, FechaFin, Monto, Estado, Cliente_IdCliente, Habitacion_IdHabitacion, 'Metodo de pago_IdMetodo' FROM Reserva", function (err, result, fields) { 
+  if (err) 
+    callback(err, null); 
+  else 
+    callback(null,result); 
+  }); 
+}; 
+
 module.exports = {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // COMPLEMENTARIOS
@@ -218,130 +361,6 @@ module.exports = {
   },
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// SELECT
-
-  // Seleccionar administradores
-  selectAdmin: function(err){
-    dbConn.query("SELECT IdAdministrador, Cedula, Nombre, FechaContratacion, Cuenta_IdCuenta FROM Administrador", function (err, result, fields) {
-      if (err) throw err;
-        console.log(result);
-    });
-  },
-
-  // Seleccionar clientes
-  selectCliente: function(err){
-    dbConn.query("SELECT IdCliente, Nombre, Apeliidos, Correo, Nacionalidad, FechaNacimiento, Cuenta_IdCuenta FROM Cliente", function (err, result, fields) {
-      if (err) throw err;
-        console.log(result);
-    });
-  },
-
-  // Seleccionar cuentas
-  selectAccounts: function(err){
-    dbConn.query("SELECT IdCuenta, Username, Contraseña, Estado FROM Cuenta", function (err, result, fields) {
-      if (err) throw err;
-        console.log(result);
-    });
-  },
-
-  // Seleccionar facturas
-  selectCheck: function(err){
-    dbConn.query("SELECT NumFactura, Descripcion, Fecha, Total, Reserva_IdReserva FROM Factura", function (err, result, fields) {
-      if (err) throw err;
-        console.log(result);
-    });
-  },
-
-  // Seleccionar gerente
-  selectManagers: function(err){
-    dbConn.query("SELECT IdGerente, Descripcion, Hotel_IdHotel, Administrador_IdAdministrador FROM Cuenta", function (err, result, fields) {
-      if (err) throw err;
-        console.log(result);
-    });
-  },
-
-  // Seleccionar gerentes de alto nivel
-  selectHighManagers: function(err){
-    dbConn.query("SELECT IdGerente_Alto_Nivel, Descripcion, Administradro_IdAdministrador FROM Gerente_Alto_Nivel", function (err, result, fields) {
-      if (err) throw err;
-        console.log(result);
-    });
-  },
-
-  // Seleccionar gerentes de alto nivel por hotel
-  selectHighManagersXHotel: function(err){
-    dbConn.query("SELECT Gerente_Alto_Nivel_IdGerente_Alto_Nivel, Hotel_IdHotel FROM Gerente_Alto_Nivel_has_Hotel", function (err, result, fields) {
-      if (err) throw err;
-        console.log(result);
-    });
-  },
-
-  // Seleccionar habitaciones
-  selectRooms: function(err){
-    dbConn.query("SELECT IdHabitacion, Nombre, Tipo, Num_Camas, Capacidad, Descripcion, Precio, Estado, Hotel_IdHotel FROM Habitacion", function (err, result, fields) {
-      if (err) throw err;
-        console.log(result);
-    });
-  },
-
-  // Seleccionar hoteles
-  selectHotels: function(err){
-    dbConn.query("SELECT IdHotel, Nombre, Estrellas, Descripcion, Ubicación, Estado FROM Hotel", function (err, result, fields) {
-      if (err) throw err;
-        console.log(JSON.stringify(result));
-        return JSON.stringify(result);
-    });
-  },
-
-  // Seleccionar metodos de pago
-  selectMethod: function(err){
-    dbConn.query("SELECT IdMetodo, Tipo FROM 'metodo de pago'", function (err, result, fields) {
-      if (err) throw err;
-        console.log(result);
-    });
-  },
-
-  // Seleccionar metodo de pago por cliente
-  selectMethodXClient: function(err){
-    dbConn.query("SELECT Cliente_IdCliente, 'Metodo de pago_IdMetodo' FROM 'metodo de pago_has_cliente'", function (err, result, fields) {
-      if (err) throw err;
-        console.log(result);
-    });
-  },
-
-  // Seleccionar recepcionistas
-  selectReceptionist: function(err){
-    dbConn.query("SELECT IdRecepcionista, Descripcion, Hotel_IdHotel, Administrador_IdAdministrador FROM Recepcionista", function (err, result, fields) {
-      if (err) throw err;
-        console.log(result);
-    });
-  },
-
-  // Seleccionar recepcionistas por reserva
-  selectHighManagersReserve: function(err){
-    dbConn.query("SELECT Recepcionista_IdRecepcionista, Reserva_IdReserva FROM Recepcionista_has_Reserva", function (err, result, fields) {
-      if (err) throw err;
-        console.log(result);
-    });
-  },
-
-  // Seleccionar reserva
-  selectReservation: function(err){
-    dbConn.query("SELECT IdReserva, FehcaInicio, FechaFin, Monto, Estado, Cliente_IdCliente, Habitacion_IdHabitacion, 'Metodo de pago_IdMetodo' FROM Reserva", function (err, result, fields) {
-      if (err) throw err;
-        console.log(result);
-    });
-  },
-
-  // Seleccionar tarjeta de credito
-  selectCreditCard: function(err){
-    dbConn.query("SELECT IdTarjeta, NumTarjeta, TarjetaHabitante, CCV, FechaCaducidad, Estado, Cliente_IdCliente, 'Metodo de pago_IdMetodo' FROM Tarjeta", function (err, result, fields) {
-      if (err) throw err;
-        console.log(result);
-    });
-  },
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // UPDATE
 
   // Actualizar los datos de un administrador
@@ -450,5 +469,19 @@ module.exports = {
       if (err) throw err;
         console.log(result.affectedRows + " record(s) updated");
       });
-  }
+  },
+  selectHotels,
+  selectAdmin,
+  selectClient,
+  selectAccounts,
+  selectCheck,
+  selectManagers,
+  selectHighManagers,
+  selectHighManagersXHotel,
+  selectRooms,
+  selectMethod,
+  selectMethodXClient,
+  selectReceptionist,
+  selectReceptionistReserve,
+  selectReservation
 }

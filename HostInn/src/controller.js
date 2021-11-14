@@ -1,1 +1,1 @@
-const Employee = require('./model');
+const model = require('./model');

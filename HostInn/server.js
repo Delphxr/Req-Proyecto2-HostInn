@@ -16,22 +16,14 @@ const router = require('./src/model')
 
 // sitio por defecto del sitio web
 app.get('/', function (req, res) {
-
-
-
-    // nota: se recomiendan imagenes con ratio de 3:2
-    var hoteles = [
-        {id: 1, nombre: "Hotel el Pepe",  ubicacion: "Playa Sucia", estrellas: 5, Descripcion: "este es un hotel", rutaImagen:"https://picsum.photos/450/300", Estado:1},
-        {id: 2, nombre: "Hotel el Buen Dormir",  ubicacion: "Volcan Poas", estrellas: 4, Descripcion: "este es un hotel", rutaImagen:"https://picsum.photos/200/400", Estado:1},
-        {id: 3, nombre: "Hotel San Juan",  ubicacion: "Playa San Juan", estrellas: 5, Descripcion: "este es un hotel", rutaImagen:"https://picsum.photos/450/300", Estado:1},
-        {id: 4, nombre: "Hotel Doña Checha",  ubicacion: "Rio Virilla", estrellas: 1, Descripcion: "este es un hotel", rutaImagen:"https://picsum.photos/450/300", Estado:1},
-        {id: 5, nombre: "Hotel Invisible",  ubicacion: "Playa que no existe", estrellas: 5, Descripcion: "este es un hotel", rutaImagen:"https://picsum.photos/450/300", Estado:0},
-        {id: 6, nombre: "Hotel visible",  ubicacion: "Playa que si existe", estrellas: 3, Descripcion: "este es un hotel", rutaImagen:"https://picsum.photos/450/300", Estado:1}
-    ]
-
-    res.render(path.join(__dirname + '/views/pages/homepage.ejs'), 
+    // obtiene todos los hoteles registrados en la base de datos
+    const value = router.selectHotels(function(err,data){
+        var hoteles = JSON.parse(JSON.stringify(data));
+        // nota: se recomiendan imagenes con ratio de 3:2
+        res.render(path.join(__dirname + '/views/pages/homepage.ejs'), 
         {hoteles:hoteles});
-    //__dirname : It will resolve to your project folder.
+        //__dirname : It will resolve to your project folder.
+    });
 });
 
 
