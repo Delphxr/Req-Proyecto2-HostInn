@@ -533,9 +533,9 @@ module.exports = {
   },
 
   // Actualizar los datos de una reserva
-  updateReservation: function(err, id, fechaInicio, fechaFinal, monto, cliente, habitacion){
-    var sql = "UPDATE Reserva SET FechaInicio = " + fechaInicio + ", FechaFin = " + fechaFinal +  ", Monto = " + monto + ", Cliente_IdCliente = " + cliente + ", Habitacion_IdHabitacion = " + habitacion + " WHERE IdReserva = " + id;
-    dbConn.query(sql, function (err, result) {
+  updateReservation: function(id, fechaInicio, fechaFinal){
+    var sql = "UPDATE Reserva SET FechaInicio = ?, FechaFin = ? WHERE IdReserva = ?";
+    dbConn.query(sql, [fechaInicio, fechaFinal, id], function (err, result) {
       if (err) throw err;
         console.log(result.affectedRows + " record(s) updated");
       });

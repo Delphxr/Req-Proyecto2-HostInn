@@ -209,7 +209,7 @@ app.get('/edit_reservacion/:idreservacion', function (req, res) {
 });
 
 //al recibir un input de editar_res
-app.post('/gestionar-recepcionistas', (req, res) => {
+app.post('/editar-res', (req, res) => {
     var datos = req.body
 
     var llegada = datos.llegada
@@ -219,7 +219,7 @@ app.post('/gestionar-recepcionistas', (req, res) => {
     console.log(datos)
 
 
-    //manejar aqui los datos de la reservacion con la BD
+    router.updateReservation(num_reservacion,llegada,salida);
     res.redirect('/homepage');
 })
 
