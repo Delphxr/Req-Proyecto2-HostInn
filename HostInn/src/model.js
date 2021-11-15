@@ -449,11 +449,17 @@ module.exports = {
   },
 
   // Insertar una reserva
-  insertReservation: function(fechaInicio, fechaFinal, monto, cliente, habitacion, metodo){
-    var sql = "INSERT INTO Reserva (FechaInicio, FechaFin, Monto, Cliente_IdCliente, Habitacion_IdHabitacion, 'Metodo de pago_IdMetodo') VALUES (?, ?, ?, ?, ?, ?)";
-    dbConn.query(sql, [fechaInicio, fechaFinal, monto, cliente, habitacion, metodo], function (err, result) {
+  insertReservation: function(fechaInicio, fechaFinal, cliente, habitacion, metodo){
+    var sql = "SELECT Precio FROM Habitacion WHERE IdHabitacion = " + habitacion;
+    dbConn.query(sql, function (err, precio) {
       if (err) throw err;
-        console.log("1 record inserted");
+        resultado = JSON.parse(JSON.stringify(precio))
+        parsed = resultado[0]
+        var sql = "INSERT INTO Reserva (FechaInicio, FechaFin, Monto, Cliente_IdCliente, Habitacion_IdHabitacion, Metodo_de_pago_IdMetodo) VALUES (?, ?, ?, ?, ?, ?)";
+        dbConn.query(sql, [fechaInicio, fechaFinal, parsed.Precio, cliente, habitacion, metodo], function (err, result) {
+        if (err) throw err;
+          console.log("1 record inserted");
+      });
     });
   },
 

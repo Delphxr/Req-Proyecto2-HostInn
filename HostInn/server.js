@@ -72,9 +72,9 @@ app.post('/register', (req, res) => {
     habitante = nombre[0] + " " + nombre[1];
     caducidadTarjeta = datos.year + '/' + datos.month + '/1'
     console.log(datos)
-    
+
     router.insertCuenta(datos.user, datos.password, 1);
-    router.insertClient(nombre[0], nombre[1], datos.email, datos.country, '2000/1/1');  // Falta input de fecha nacimiento
+    router.insertClient(nombre[0], nombre[1], datos.email, datos.country, datos.nacimiento);
     router.insertCreditCard(datos.card_num, habitante, datos.code, caducidadTarjeta, 2);
     router.insertMethodXClientWeb(2);
     res.redirect('/homepage');
@@ -156,6 +156,8 @@ app.post('/reservacion', (req, res) => {
     var ninos = datos.ninos
     var cantidad_habitaciones = datos.cantidad
     var id_habitacion = datos.idHabitacion
+    var idCliente = sesion.id
+    var monto = datos.precio
 
     console.log(datos)
 
@@ -164,6 +166,8 @@ app.post('/reservacion', (req, res) => {
         var key = "edad-" + i
         edades.push(datos[key])
     }
+
+    router.insertReservation(llegada,salida,idCliente, id_habitacion, 2)
 
     //manejar aqui los datos de la reservacion con la BD
     res.redirect('/homepage');
