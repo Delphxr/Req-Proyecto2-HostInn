@@ -59,7 +59,7 @@
                                     <div class="row">
                                         <div class="col-6">
                                             <label class="text-primary" for="inputEmail4">Cantidad habitaciones:</label>
-                                            <input type="number" min="0" class="form-control" id="inputEmail4" name="cantidad"
+                                            <input type="number" min="1" value="1" class="form-control" id="inputEmail4" name="cantidad"
                                                 placeholder="00">
                                         </div>
                                         <div class="col-6 text-right" id="columnaNinos">
@@ -72,7 +72,7 @@
                                 </div>
 
                             </div>
-
+                            <input value="<%= habitacion.IdHabitacion %>" name="idHabitacion" readonly="readonly" style="display: none;"></input>
                             <button type="submit" class="btn btn-primary">Reservar</button>
                         </form>
                     </div>

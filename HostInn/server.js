@@ -149,6 +149,9 @@ app.post('/reservacion', (req, res) => {
     var adultos = datos.adultos
     var ninos = datos.ninos
     var cantidad_habitaciones = datos.cantidad
+    var id_habitacion = datos.idHabitacion
+
+    console.log(datos)
 
     var edades = []
     for (var i = 1; i <= ninos; i++){
@@ -182,6 +185,64 @@ app.get('/history-cliente', function (req, res) {
     }, idCliente);
 
 });
+
+
+
+
+
+
+
+// pagina de reservar habitacion
+app.get('/edit_reservacion/:idreservacion', function (req, res) {
+
+    var idreservacion = req.params.idreservacion
+
+    const value = router.selectReservationUnique(function (err, data) {
+        var history = JSON.parse(JSON.stringify(data));
+
+        console.log(history)
+        if (sesion.activo == true) {
+            res.render(path.join(__dirname + '/views/pages/editar_historial.ejs'),
+                {history: history[0], user: sesion });
+        } else {
+            res.redirect('/log');
+        }
+   
+
+    }, idreservacion);
+
+});
+
+//al recibir un input de editar_res
+app.post('/editar-res', (req, res) => {
+    var datos = req.body
+
+    var llegada = datos.llegada
+    var salida = datos.salida
+    var num_reservacion = datos.idHabitacion
+
+    console.log(datos)
+
+
+    //manejar aqui los datos de la reservacion con la BD
+    res.redirect('/homepage');
+})
+
+
+// manejamos el cancelar una reservacion
+app.get('/cancelar-reserva/:idreservacion', function (req, res) {
+
+    var idreservacion = req.params.idreservacion
+    console.log(idreservacion)
+    //manejar aqui la cancelacion
+    res.redirect('/homepage');
+
+});
+
+
+
+
+
 // -------------------------------------------------------------------------------
 
 

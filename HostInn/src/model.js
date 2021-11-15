@@ -173,6 +173,16 @@ function selectReservation (callback){
   }); 
 };
 
+// Seleccionar reserva 
+function selectReservationUnique (callback, id){ 
+  dbConn.query("SELECT * FROM Reserva WHERE IdReserva = " + id, function (err, result, fields) { 
+  if (err) 
+    callback(err, null); 
+  else 
+    callback(null,result); 
+  }); 
+};
+
 function selectReservationByCliente (callback, id){ 
   dbConn.query("SELECT * FROM Reserva WHERE Cliente_IdCliente = " + id, function (err, result, fields) { 
   if (err) 
@@ -545,6 +555,7 @@ module.exports = {
   selectReceptionist,
   selectReceptionistReserve,
   selectReservation,
+  selectReservationUnique,
   selectReservationByCliente,
   selectHotelUnique,
   selectCategories
