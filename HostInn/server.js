@@ -295,7 +295,7 @@ app.post('/editar-recep', (req, res) => {
 
     console.log(datos)
 
-
+    router.updateAdmin(datos.cedula, datos.nombre, datos.idAdministrador)
     //aqui manejamos editar el recepcionista
     res.redirect('/homepage');
 })
