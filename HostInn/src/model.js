@@ -469,8 +469,10 @@ module.exports = {
     });
   },
 
-  // Insertar una reserva
-  insertReservation: function(fechaInicio, fechaFinal, cuenta, habitacion, metodo, cantidad){
+   // Insertar una reserva
+   insertReservation: function(fechaInicio, fechaFinal, cuenta, habitacion, metodo, cantidad){
+    var d1 = new Date(fechaInicio);
+    var d2 = new Date(fechaFinal);
     var sql = "SELECT Precio FROM Habitacion WHERE IdHabitacion = " + habitacion;
     dbConn.query(sql, function (err, precio) {
       if (err) throw err;
@@ -481,8 +483,10 @@ module.exports = {
           if (err) throw err;
             resultado = JSON.parse(JSON.stringify(cliente))
             parsed2 = resultado[0]
+            diff = Math.abs(d1.getTime() - d2.getTime())
+            differentDays = Math.ceil(diff / (1000 * 3600 * 24))
             var sql = "INSERT INTO Reserva (FechaInicio, FechaFin, Monto, Cliente_IdCliente, Habitacion_IdHabitacion, Metodo_de_pago_IdMetodo) VALUES (?, ?, ?, ?, ?, ?)";
-            dbConn.query(sql, [fechaInicio, fechaFinal, cantidad * parsed1.Precio, parsed2.IdCliente, habitacion, metodo], function (err, result) {
+            dbConn.query(sql, [fechaInicio, fechaFinal, differentDays * cantidad * parsed1.Precio, parsed2.IdCliente, habitacion, metodo], function (err, result) {
             if (err) throw err;
               console.log("1 record inserted");
             });
