@@ -435,90 +435,90 @@ module.exports = {
 // UPDATE
 
   // Actualizar los datos de un administrador
-  updateAdmin: function(err, id, cedula, nombre, fecha){
-    var sql = "UPDATE Administrador SET Cedula = " + cedula + ", Nombre = " + nombre +  ", FechaContratacion = " + fecha + " WHERE IdAdministrador = " + id;
-    dbConn.query(sql, function (err, result) {
+  updateAdmin: function(id, cedula, nombre, fecha){
+    var sql = "UPDATE Administrador SET Cedula = ?, Nombre = ?, FechaContratacion = ? WHERE IdAdministrador = ?";
+    dbConn.query(sql, [id, cedula, nombre, fecha], function (err, result) {
       if (err) throw err;
         console.log(result.affectedRows + " record(s) updated");
       });
   },
 
   // Actualizar los datos de un cliente
-  updateClient: function(err, id, nombre, apellidos, correo, nacionalidad, fecha){
-    var sql = "UPDATE Cliente SET Nombre = " + nombre + ", Apeliidos = " + apellidos +  ", Correo = " + correo + ", Nacionalidad = " + nacionalidad + ", FechaNacimiento = " + fecha + " WHERE IdCliente = " + id;
-    dbConn.query(sql, function (err, result) {
+  updateClient: function(id, nombre, apellidos, correo, nacionalidad, fecha){
+    var sql = "UPDATE Cliente SET Nombre = ?, Apeliidos = ?, Correo = ?, Nacionalidad = ?, FechaNacimiento = ? WHERE IdCliente = ?";
+    dbConn.query(sql, [id, nombre, apellidos, correo, nacionalidad, fecha], function (err, result) {
       if (err) throw err;
         console.log(result.affectedRows + " record(s) updated");
       });
   },
 
   // Actualizar los datos de una cuenta
-  updateAccount: function(err, id, username, contrasenia, categoria){
-    var sql = "UPDATE Cuenta SET Username = " + username + ", Contraseña = " + contrasenia + ", Categoria_IdCategoria = "+ categoria +" WHERE IdCuenta = " + id;
-    dbConn.query(sql, function (err, result) {
+  updateAccount: function(id, username, contrasenia, categoria){
+    var sql = "UPDATE Cuenta SET Username = ?, Contraseña = ?, Categoria_IdCategoria = ? WHERE IdCuenta = ?";
+    dbConn.query(sql, [id, username, contrasenia, categoria], function (err, result) {
       if (err) throw err;
         console.log(result.affectedRows + " record(s) updated");
       });
   },
 
   // Actualizar los datos de las facturas
-  updateCheck: function(err, id, descripcion, fecha, total){
-    var sql = "UPDATE Factura SET Descripcion = " + descripcion + ", Fecha = " + fecha +  ", Total = " + total + " WHERE IdFactura = " + id;
-    dbConn.query(sql, function (err, result) {
+  updateCheck: function(id, descripcion, fecha, total){
+    var sql = "UPDATE Factura SET Descripcion = ?, Fecha = ?, Total = ? WHERE IdFactura = ?";
+    dbConn.query(sql, [id, descripcion, fecha, total], function (err, result) {
       if (err) throw err;
         console.log(result.affectedRows + " record(s) updated");
       });
   },
 
   // Actualizar los datos de un gerente
-  updateManager: function(err, id, descripcion, hotel){
-    var sql = "UPDATE Gerente SET Descripcion = " + descripcion + ", Hotel_IdHotel = " + hotel + " WHERE IdGerente = " + id;
-    dbConn.query(sql, function (err, result) {
+  updateManager: function(id, descripcion, hotel){
+    var sql = "UPDATE Gerente SET Descripcion = ?, Hotel_IdHotel = ? WHERE IdGerente = ?";
+    dbConn.query(sql, [id, descripcion, hotel], function (err, result) {
       if (err) throw err;
         console.log(result.affectedRows + " record(s) updated");
       });
   },
 
   // Actualizar los datos de un alto gerente
-  updateHighManager: function(err, id, descripcion){
-    var sql = "UPDATE Gerente_Alto_Nivel SET Descripcion = " + descripcion + " WHERE IdGerente_Alto_Nivel = " + id;
-    dbConn.query(sql, function (err, result) {
+  updateHighManager: function(id, descripcion){
+    var sql = "UPDATE Gerente_Alto_Nivel SET Descripcion = ? WHERE IdGerente_Alto_Nivel = ?";
+    dbConn.query(sql, [id, descripcion], function (err, result) {
       if (err) throw err;
         console.log(result.affectedRows + " record(s) updated");
       });
   },
 
   // Actualizar los datos de una habitacion
-  updateRoom: function(err, id, nombre, tipo, numCamas, capacidad, descripcion, precio){
-    var sql = "UPDATE Habitacion SET Nombre = " + nombre + ", Tipo = " + tipo +  ", Num_camas = " + numCamas + ", Capacidad = " + capacidad + ", Descripcion = " + descripcion + ", Precio = " + precio + " WHERE IdHabitacion = " + id;
-    dbConn.query(sql, function (err, result) {
+  updateRoom: function(id, nombre, tipo, numCamas, capacidad, descripcion, precio){
+    var sql = "UPDATE Habitacion SET Nombre = ?, Tipo = ?, Num_camas = ?, Capacidad = ?, Descripcion = ?, Precio = ? WHERE IdHabitacion = ?";
+    dbConn.query(sql, [id, nombre, tipo, numCamas, capacidad, descripcion, precio], function (err, result) {
       if (err) throw err;
         console.log(result.affectedRows + " record(s) updated");
       });
   },
 
   // Actualizar los datos de un hotel
-  updateHotel: function(err, id, nombre, estrellas, descripcion, ubicacion){
-    var sql = "UPDATE Hotel SET Nombre = " + nombre + ", Estrellas = " + estrellas +  ", Descripcion = " + descripcion + ", Ubicacion = " + ubicacion + " WHERE IdHotel = " + id;
-    dbConn.query(sql, function (err, result) {
+  updateHotel: function(id, nombre, estrellas, descripcion, ubicacion){
+    var sql = "UPDATE Hotel SET Nombre = ?, Estrellas = ?, Descripcion = ?, Ubicacion = ? WHERE IdHotel = ?";
+    dbConn.query(sql, [id, nombre, estrellas, descripcion, ubicacion], function (err, result) {
       if (err) throw err;
         console.log(result.affectedRows + " record(s) updated");
       });
   },
 
   // Actualizar los datos de un metodo de pago
-  updateMethod: function(err, id, tipo){
-    var sql = "UPDATE 'metodo de pago' SET Tipo = " + tipo + " WHERE IdMetodo = " + id;
-    dbConn.query(sql, function (err, result) {
+  updateMethod: function(id, tipo){
+    var sql = "UPDATE 'metodo de pago' SET Tipo = ? WHERE IdMetodo = ?";
+    dbConn.query(sql, [id, tipo], function (err, result) {
       if (err) throw err;
         console.log(result.affectedRows + " record(s) updated");
       });
   },
 
   // Actualizar los datos de un recepcionista
-  updateReceptionist: function(err, id, descripcion, hotel){
-    var sql = "UPDATE Recepcionista SET Descripcion = " + descripcion + ", Hotel_IdHotel = " + hotel + " WHERE IdRecepcionista = " + id;
-    dbConn.query(sql, function (err, result) {
+  updateReceptionist: function(id, descripcion, hotel){
+    var sql = "UPDATE Recepcionista SET Descripcion = ?, Hotel_IdHotel = ? WHERE IdRecepcionista = ?";
+    dbConn.query(sql, [id, descripcion, hotel], function (err, result) {
       if (err) throw err;
         console.log(result.affectedRows + " record(s) updated");
       });
@@ -534,9 +534,9 @@ module.exports = {
   },
 
   // Actualizar los datos de una tarjeta de credito
-  updateCreditCard: function(err, id, numTarjeta, tarHabitante, CCV, fecha){
-    var sql = "UPDATE Tarjeta SET NumTarjeta = " + numTarjeta + ", TarjetaHabitante = " + tarHabitante +  ", CCV = " + CCV + ", FechaCaducidad = " + fecha + " WHERE IdTarjeta = " + id;
-    dbConn.query(sql, function (err, result) {
+  updateCreditCard: function(id, numTarjeta, tarHabitante, CCV, fecha){
+    var sql = "UPDATE Tarjeta SET NumTarjeta = ?, TarjetaHabitante = ?, CCV = ?, FechaCaducidad = ? WHERE IdTarjeta = ?";
+    dbConn.query(sql, [id, numTarjeta, tarHabitante, CCV, fecha], function (err, result) {
       if (err) throw err;
         console.log(result.affectedRows + " record(s) updated");
       });
