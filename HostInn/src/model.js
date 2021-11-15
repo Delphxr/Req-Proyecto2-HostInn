@@ -297,12 +297,9 @@ module.exports = {
 // INSERTAR
 
   // Insertar un nuevo administrador
-  insertAdmin: function(err, cedula, nombre, fecha, cuenta){
-    //var cedula = 123123
-    //var nombre = "Max"
-    //var fecha =  
-    var sql = "INSERT INTO Cuenta (Cedula, Nombre, FechaContratacion, Cuenta_IdCuenta) VALUES ("+ cedula +"," + nombre + "," + fecha + "," + cuenta + ")";
-      dbConn.query(sql, function (err, result) {
+  insertAdmin: function(cedula, nombre, fecha, cuenta){
+    var sql = "INSERT INTO Cuenta (Cedula, Nombre, FechaContratacion, Cuenta_IdCuenta) VALUES (?,?,?,?)";
+      dbConn.query(sql, [cedula,nombre,fecha,cuenta],function (err, result) {
         if (err) throw err;
           console.log("1 record inserted");
       });
@@ -310,11 +307,8 @@ module.exports = {
 
   // Insertar un nuevo cliente 
   insertClient: function(nombre, apellidos, correo, nacionalidad, fecha, cuenta){
-    //var cedula = 123123
-    //var nombre = "Max"
-    //var fecha =  
-    var sql = "INSERT INTO Cliente (Nombre, Apeliidos, Correo, Nacionalidad, FechaNacimiento, Cuenta_IdCuenta) VALUES ("+ nombre +"," + apellidos + "," + correo + "," + nacionalidad + "," + fecha + "," + cuenta +")";
-      dbConn.query(sql, function (err, result) {
+    var sql = "INSERT INTO Cliente (Nombre, Apeliidos, Correo, Nacionalidad, FechaNacimiento, Cuenta_IdCuenta) VALUES (?,?,?,?,?,?)";
+      dbConn.query(sql, [nombre, apellidos, correo, nacionalidad, fecha, cuenta], function (err, result) {
         if (err) throw err;
           console.log("1 record inserted");
       });
@@ -322,118 +316,116 @@ module.exports = {
 
   // Insertar una nueva cuenta
   insertCuenta: function(user, contrasenia, categoria){
-    //var user = "'a'"
-    //var contrasenia = "'asd'"
-    var sql = "INSERT INTO Cuenta (Username, Contraseña,Categoria_IdCategoria) VALUES ("+ user +"," + contrasenia + ","+ categoria +")";
-      dbConn.query(sql, function (err, result) {
+    var sql = "INSERT INTO Cuenta (Username, Contraseña,Categoria_IdCategoria) VALUES (?,?,?)";
+      dbConn.query(sql, [user, contrasenia, categoria], function (err, result) {
         if (err) throw err;
           console.log("1 record inserted");
       });
     },
 
   // Insertar una nueva factura
-  insertCheck: function(err, numFactura, descripcion, fecha, total, reserva){
-    var sql = "INSERT INTO Factura (NumFactura, Descipcion, Fecha, Total, Reserva_IdReserva) VALUES ("+ numFactura + "," + descripcion + "," + fecha + "," + total + "," + reserva +  ")";
-    dbConn.query(sql, function (err, result) {
+  insertCheck: function(numFactura, descripcion, fecha, total, reserva){
+    var sql = "INSERT INTO Factura (NumFactura, Descipcion, Fecha, Total, Reserva_IdReserva) VALUES (?,?,?,?,?)";
+    dbConn.query(sql, [numFactura, descripcion, fecha, total, reserva], function (err, result) {
       if (err) throw err;
         console.log("1 record inserted");
     });
   },
 
   // Insertar un nuevo gerente
-  insertManger: function(err, descripcion, hotel, admin){
-    var sql = "INSERT INTO Gerente (Descipcion, Hotel_IdHotel, Administrador_IdAdministrador) VALUES ("+ descripcion + "," + hotel + "," + admin + ")";
-    dbConn.query(sql, function (err, result) {
+  insertManger: function(descripcion, hotel, admin){
+    var sql = "INSERT INTO Gerente (Descipcion, Hotel_IdHotel, Administrador_IdAdministrador) VALUES (?,?,?)";
+    dbConn.query(sql, [descripcion, hotel, admin], function (err, result) {
       if (err) throw err;
         console.log("1 record inserted");
     });
   },
 
   // Insertar un nuevo gerente de alto nivel
-  insertHighManger: function(err, descripcion, hotel){
-    var sql = "INSERT INTO Gerente_Alto_Nivel (Descipcion, Hotel_IdHotel) VALUES ("+ descripcion + "," + hotel + ")";
-    dbConn.query(sql, function (err, result) {
+  insertHighManger: function(descripcion, hotel){
+    var sql = "INSERT INTO Gerente_Alto_Nivel (Descipcion, Hotel_IdHotel) VALUES (?,?)";
+    dbConn.query(sql, [descripcion, hotel], function (err, result) {
       if (err) throw err;
         console.log("1 record inserted");
     });
   },
 
   // Insertar un gerente de alto nivel por hotel
-  insertHighMangerXHotel: function(err, gerente, hotel){
-    var sql = "INSERT INTO Gerente_Alto_Nivel_has_Hotel (Gerente_Alto_Nivel_IdGerente_Alto_Nivel, Hotel_IdHotel) VALUES ("+ gerente + "," + hotel + ")";
-    dbConn.query(sql, function (err, result) {
+  insertHighMangerXHotel: function(gerente, hotel){
+    var sql = "INSERT INTO Gerente_Alto_Nivel_has_Hotel (Gerente_Alto_Nivel_IdGerente_Alto_Nivel, Hotel_IdHotel) VALUES (?, ?)";
+    dbConn.query(sql, [gerente, hotel], function (err, result) {
       if (err) throw err;
         console.log("1 record inserted");
     });
   },
 
   // Insertar una habitacion
-  insertRoom: function(err, nombre, tipo, numCamas, capacidad, descripcion, precio, hotel){
-    var sql = "INSERT INTO Habitacion (Nombre, Tipo, Num_Camas, Capacidad, Descripcion, Precio, Hotel_IdHotel) VALUES ("+ nombre + "," + tipo + "," + numCamas + "," + capacidad + "," + descripcion+ "," + precio + "," + hotel + ")";
-    dbConn.query(sql, function (err, result) {
+  insertRoom: function(nombre, tipo, numCamas, capacidad, descripcion, precio, hotel){
+    var sql = "INSERT INTO Habitacion (Nombre, Tipo, Num_Camas, Capacidad, Descripcion, Precio, Hotel_IdHotel) VALUES (? , ?, ?, ?, ?, ?)";
+    dbConn.query(sql, [nombre, tipo, numCamas, capacidad, descripcion, precio, hotel], function (err, result) {
       if (err) throw err;
         console.log("1 record inserted");
     });
   },
 
   // Insertar un nuevo hotel
-  insertHotel: function(err, nombre, estrellas, descripcion, ubicacion){
-    var sql = "INSERT INTO Hotel (Nombre, Estrellas, Descripcion, Ubicacion) VALUES (" + nombre + "," + estrellas + "," + descripcion + "," + ubicacion + ")";
-    dbConn.query(sql, function (err, result) {
+  insertHotel: function(nombre, estrellas, descripcion, ubicacion){
+    var sql = "INSERT INTO Hotel (Nombre, Estrellas, Descripcion, Ubicacion) VALUES (?, ?, ?, ?)";
+    dbConn.query(sql, [nombre, estrellas, descripcion, ubicacion], function (err, result) {
       if (err) throw err;
         console.log("1 record inserted");
     });
   },
 
   // Insertar metodo de pago
-  insertMethod: function(err, tipo){
-    var sql = "INSERT INTO 'Metodo de pago' (Tipo) VALUES (" + tipo + ")";
-    dbConn.query(sql, function (err, result) {
+  insertMethod: function(tipo){
+    var sql = "INSERT INTO 'Metodo de pago' (Tipo) VALUES (?)";
+    dbConn.query(sql, [tipo], function (err, result) {
       if (err) throw err;
         console.log("1 record inserted");
     });
   },
 
   // Insertar metodo de pago por cliente
-  insertMethodXClient: function(err, cliente, metodo){
-    var sql = "INSERT INTO 'Metodo de pago_has_Cliente' (Cliente_IdCliente, 'Metodo de pago_IdMetodo') VALUES ("+ cliente + "," + metodo + ")";
-    dbConn.query(sql, function (err, result) {
+  insertMethodXClient: function(cliente, metodo){
+    var sql = "INSERT INTO 'Metodo de pago_has_Cliente' (Cliente_IdCliente, 'Metodo de pago_IdMetodo') VALUES (?, ?)";
+    dbConn.query(sql, [cliente, metodo], function (err, result) {
       if (err) throw err;
       console.log("1 record inserted");
     });
   },
 
   // Insertar un nuevo recepcionista
-  insertReceptionist: function(err, descripcion, hotel, admin){
-    var sql = "INSERT INTO Recepcionista (Descripcion, Hotel_IdHotel, Administrador_IdAdministrador) VALUES ("+ descripcion + "," + hotel + "," + admin + ")";
-    dbConn.query(sql, function (err, result) {
+  insertReceptionist: function(descripcion, hotel, admin){
+    var sql = "INSERT INTO Recepcionista (Descripcion, Hotel_IdHotel, Administrador_IdAdministrador) VALUES (?, ?, ?)";
+    dbConn.query(sql, [descripcion, hotel, admin], function (err, result) {
       if (err) throw err;
         console.log("1 record inserted");
     });
   },
 
   // Insertar un nuevo recepcionista por reserva
-  insertReceptionistXReservation: function(err, recepcionista, reserva){
-    var sql = "INSERT INTO Recepcionista_has_Reserva (Recepcionista_IdRecepcionista, Reserva_IdReserva) VALUES ("+ recepcionista + "," + reserva + ")";
-    dbConn.query(sql, function (err, result) {
+  insertReceptionistXReservation: function(recepcionista, reserva){
+    var sql = "INSERT INTO Recepcionista_has_Reserva (Recepcionista_IdRecepcionista, Reserva_IdReserva) VALUES (? ,?)";
+    dbConn.query(sql, [recepcionista, reserva], function (err, result) {
       if (err) throw err;
         console.log("1 record inserted");
     });
   },
 
   // Insertar una reserva
-  insertReservation: function(err, fechaInicio, fechaFinal, monto, cliente, habitacion, metodo){
-    var sql = "INSERT INTO Reserva (FechaInicio, FechaFin, Monto, Cliente_IdCliente, Habitacion_IdHabitacion, 'Metodo de pago_IdMetodo') VALUES ("+ fechaInicio + "," + fechaFinal + "," + monto + "," + cliente + "," + habitacion + "," + metodo + "," + ")";
-    dbConn.query(sql, function (err, result) {
+  insertReservation: function(fechaInicio, fechaFinal, monto, cliente, habitacion, metodo){
+    var sql = "INSERT INTO Reserva (FechaInicio, FechaFin, Monto, Cliente_IdCliente, Habitacion_IdHabitacion, 'Metodo de pago_IdMetodo') VALUES (?, ?, ?, ?, ?, ?)";
+    dbConn.query(sql, [fechaInicio, fechaFinal, monto, cliente, habitacion, metodo], function (err, result) {
       if (err) throw err;
         console.log("1 record inserted");
     });
   },
 
   // Insertar una tarjeta
-  insertCreditCard: function(err, numTarjeta, tarHabitante, CCV, fecha, cliente, metodo){
-    var sql = "INSERT INTO Tarjeta (NumTarjeta, TarjetaHabitante, CCV, FechaCaducidad, Cliente_IdCliente, 'Metodo de pago_IdMetodo') VALUES ("+ numTarjeta + "," + tarHabitante + "," + CCV + "," + fecha + "," + cliente + "," + metodo + ")";
-    dbConn.query(sql, function (err, result) {
+  insertCreditCard: function(numTarjeta, tarHabitante, CCV, fecha, cliente, metodo){
+    var sql = "INSERT INTO Tarjeta (NumTarjeta, TarjetaHabitante, CCV, FechaCaducidad, Cliente_IdCliente, 'Metodo de pago_IdMetodo') VALUES (?, ?, ?, ?, ?, ?)";
+    dbConn.query(sql, [numTarjeta, tarHabitante, CCV, fecha, cliente, metodo], function (err, result) {
       if (err) throw err;
         console.log("1 record inserted");
     });
