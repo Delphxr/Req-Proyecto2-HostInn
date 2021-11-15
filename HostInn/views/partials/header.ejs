@@ -2,16 +2,16 @@
     <div class="container px-4 px-lg-5">
         <a class="navbar-brand font-weight-bold" href="/"> <i class="dot" style="vertical-align: -6px;"></i>
             HostInn</img></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
+                class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                
+
                 <li class="nav-item"><a class="nav-link" href="/#inicio">Inicio</a></li>
-                
+
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="/#hoteles">Hoteles</a></li>
-                
+
                 <li class="nav-item"><a class="nav-link" href="/#about">About</a></li>
 
 
@@ -19,31 +19,43 @@
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">Ajustes</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="/history-cliente">Historial</a></li>
-                        <li>
-                            <hr class="dropdown-divider" />
-                        </li>
-                        <li><a class="dropdown-item" href="#!">Editar Hoteles</a></li>
-                        <li><a class="dropdown-item" href="#!">Editar Gerentes</a></li>
+                        <% if (user.tipo==1 || user.tipo==4) { %>
+                            <li><a class="dropdown-item" href="/history-cliente">Historial</a></li>
+                            <li>
+                                <hr class="dropdown-divider" />
+                            </li>
+                            <% }; %>
+                                <% if (user.tipo==2) { %>
+                                    <li><a class="dropdown-item" href="/gestionar-recepcionistas">Gestionar
+                                            Recepcionista</a></li>
+
+                                    <% } else if (user.tipo==3) {%>
+                                        <li><a class="dropdown-item" href="/gestionar-gerentes">Gestionar Gerentes</a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="/gestionar-hoteles">Gestionar Hoteles</a>
+                                        </li>
+
+                                        <% } %>
+
                     </ul>
                 </li>
 
             </ul>
 
-            <% if (user.activo == true) {%>
-                <a class="btn btn-outline-primary" href="/logout" >
+            <% if (user.activo==true) {%>
+                <a class="btn btn-outline-primary" href="/logout">
                     <i class="bi-person-fill me-1"></i>
                     <%= user.usuario %>
                 </a>
-                
-            <% } else { %>
-                <a class="btn btn-outline-primary" href="/log" >
-                    <i class="bi-person-fill me-1"></i>
-                    Login
-                </a>
-                
-            <% } %>
-            
+
+                <% } else { %>
+                    <a class="btn btn-outline-primary" href="/log">
+                        <i class="bi-person-fill me-1"></i>
+                        Login
+                    </a>
+
+                    <% } %>
+
 
 
         </div>

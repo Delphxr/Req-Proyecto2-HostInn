@@ -15,7 +15,7 @@ app.use("/views", express.static(__dirname + "/views"));
 const router = require('./src/model');
 
 // variable para manejar los inicios de secion
-var sesion = { usuario: "", password: "", tipo: 0, id: 0,activo: false }
+var sesion = { usuario: "", password: "", tipo: 0, id: 0, activo: false }
 
 
 //-------------------------------- Controlamos las paginas ------------------------
@@ -129,9 +129,9 @@ app.get('/reserve/:roomId', function (req, res) {
         var habitacion = JSON.parse(JSON.stringify(data));
 
         console.log(habitacion)
-        if (sesion.activo == true) {
+        if (sesion.activo == true && (sesion.tipo == 1 || sesion.tipo == 4)) {
             res.render(path.join(__dirname + '/views/pages/reservar.ejs'),
-                {habitacion: habitacion[0], user: sesion });
+                { habitacion: habitacion[0], user: sesion });
         } else {
             res.redirect('/log');
         }
@@ -154,7 +154,7 @@ app.post('/reservacion', (req, res) => {
     console.log(datos)
 
     var edades = []
-    for (var i = 1; i <= ninos; i++){
+    for (var i = 1; i <= ninos; i++) {
         var key = "edad-" + i
         edades.push(datos[key])
     }
@@ -176,11 +176,11 @@ app.get('/history-cliente', function (req, res) {
         console.log(history)
         if (sesion.activo == true) {
             res.render(path.join(__dirname + '/views/pages/historial.ejs'),
-                {historial: history, user: sesion });
+                { historial: history, user: sesion });
         } else {
             res.redirect('/log');
         }
-   
+
 
     }, idCliente);
 
@@ -203,23 +203,23 @@ app.get('/edit_reservacion/:idreservacion', function (req, res) {
         console.log(history)
         if (sesion.activo == true) {
             res.render(path.join(__dirname + '/views/pages/editar_historial.ejs'),
-                {history: history[0], user: sesion });
+                { history: history[0], user: sesion });
         } else {
             res.redirect('/log');
         }
-   
+
 
     }, idreservacion);
 
 });
 
 //al recibir un input de editar_res
-app.post('/editar-res', (req, res) => {
+app.post('/gestionar-recepcionistas', (req, res) => {
     var datos = req.body
 
     var llegada = datos.llegada
     var salida = datos.salida
-    var num_reservacion = datos.idHabitacion
+    var num_reservacion = datos.num_reservacion
 
     console.log(datos)
 
@@ -239,7 +239,27 @@ app.get('/cancelar-reserva/:idreservacion', function (req, res) {
 
 });
 
+// manejamos el cancelar una reservacion
+app.get('/gestionar-recepcionistas', function (req, res) {
 
+    var idgerente = sesion.id 
+
+    const value = router.selectReceptionistbyGerente(function (err, data) {
+        var recepcionistas = JSON.parse(JSON.stringify(data));
+
+        console.log(recepcionistas)
+        if (sesion.activo == true) {
+            res.render(path.join(__dirname + '/views/pages/recepcionistas.ejs'),
+                { recepcionistas: recepcionistas, user: sesion });
+        } else {
+            res.redirect('/log');
+        }
+
+
+
+    }, idgerente);
+
+});
 
 
 
