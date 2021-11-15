@@ -272,10 +272,10 @@ module.exports = {
   },
 
   // Eliminar reserva
-  deleteReservation: function (err, id){
+  deleteReservation: function (idReserva){
     // var id = "'1'"
     // var estado = "'2'"
-    var sql = "UPDATE Reserva SET Estado = " + estado +  " WHERE IdReserva = " + id;
+    var sql = "UPDATE Reserva SET Estado = 0 WHERE IdReserva = " + idReserva;
     dbConn.query(sql, function (err, result) {
       if (err) throw err;
         console.log(result.affectedRows + " record(s) updated");
