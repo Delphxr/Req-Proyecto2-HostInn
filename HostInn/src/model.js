@@ -5,7 +5,7 @@ const dbConn = require('../config/db.config');
 
 // Selecciona los hoteles 
 function selectHotels (callback){
-  dbConn.query('SELECT IdHotel, Nombre, Estrellas, Descripcion, Ubicación, Estado FROM Hotel', function(err, result){
+  dbConn.query('SELECT IdHotel, Nombre, Estrellas, Descripcion, Ubicación, Estado, Imagen FROM Hotel', function(err, result){
   if (err) 
     callback(err,null);
   else
@@ -15,7 +15,7 @@ function selectHotels (callback){
 
 // Selecciona un hoteles por id
 function selectHotelUnique (callback, id){
-  dbConn.query("SELECT IdHotel, Nombre, Estrellas, Descripcion, Ubicación, Estado FROM Hotel WHERE Idhotel = " + id, function(err, result){
+  dbConn.query("SELECT IdHotel, Nombre, Estrellas, Descripcion, Ubicación, Estado, Imagen FROM Hotel WHERE Idhotel = " + id, function(err, result){
   if (err) 
     callback(err,null);
   else
@@ -105,7 +105,7 @@ function selectHighManagersXHotel (callback){
 
 // Seleccionar habitaciones
 function selectRooms (callback){
-  dbConn.query("SELECT IdHabitacion, Nombre, Tipo, Num_Camas, Capacidad, Descripcion, Precio, Estado, Hotel_IdHotel FROM Habitacion", function (err, result) {
+  dbConn.query("SELECT IdHabitacion, Nombre, Tipo, Num_Camas, Capacidad, Descripcion, Precio, Estado, Imagen, Hotel_IdHotel FROM Habitacion", function (err, result) {
   if (err)
     callback(err, null);
   else
@@ -115,7 +115,7 @@ function selectRooms (callback){
 
 // Seleccionar habitacion especifica
 function selectOneRoom (callback, idroom){
-  dbConn.query("SELECT IdHabitacion, Nombre, Tipo, Num_Camas, Capacidad, Descripcion, Precio, Estado, Hotel_IdHotel FROM Habitacion WHERE IdHabitacion = " + idroom, function (err, result) {
+  dbConn.query("SELECT IdHabitacion, Nombre, Tipo, Num_Camas, Capacidad, Descripcion, Precio, Estado, Imagen, Hotel_IdHotel FROM Habitacion WHERE IdHabitacion = " + idroom, function (err, result) {
   if (err)
     callback(err, null);
   else
@@ -125,7 +125,7 @@ function selectOneRoom (callback, idroom){
 
 // Seleccionar habitaciones pod hotel
 function selectRoomsUnique (callback, idHotel){
-  dbConn.query("SELECT IdHabitacion, h.Nombre, Tipo, Num_Camas, Capacidad, h.Descripcion, Precio, h.Estado, Hotel_IdHotel, a.Nombre as nombreHotel, a.Descripcion as descripcionHotel, a.Ubicación as Ubicación_hotel FROM Habitacion h INNER JOIN Hotel a ON h.Hotel_IdHotel = a.IdHotel WHERE Hotel_IdHotel =" + idHotel, function (err, result) {
+  dbConn.query("SELECT IdHabitacion, h.Nombre, Tipo, Num_Camas, Capacidad, h.Descripcion, Precio, h.Estado, h.Imagen, Hotel_IdHotel, a.Nombre as nombreHotel, a.Descripcion as descripcionHotel, a.Ubicación as Ubicación_hotel FROM Habitacion h INNER JOIN Hotel a ON h.Hotel_IdHotel = a.IdHotel WHERE Hotel_IdHotel =" + idHotel, function (err, result) {
   if (err)
     callback(err, null);
   else
