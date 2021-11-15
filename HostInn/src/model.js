@@ -239,10 +239,10 @@ module.exports = {
 // ELIMINAR
 
   // Eliminar cuenta
-  deleteAccount: function(err, id, estado){
+  deleteAccount: function(err, idCuenta){
     // var id = "'1'"
     // var estado = "'2'" 
-    var sql = "UPDATE Cuenta SET Estado = " + estado +  " WHERE IdCuenta = " + id;
+    var sql = "UPDATE Cuenta SET Estado = 0 WHERE IdCuenta = " + idCuenta;
     dbConn.query(sql, function (err, result) {
       if (err) throw err;
         console.log(result.affectedRows + " record(s) updated");
@@ -250,10 +250,10 @@ module.exports = {
   },
 
   // Eliminar habitacion
-  deleteRoom: function (err, id, estado){
+  deleteRoom: function (err, idHabitacion){
     // var id = "'1'"
     // var estado = "'2'"
-    var sql = "UPDATE Habitacion SET Estado = " + estado +  " WHERE IdHabitacion = " + id;
+    var sql = "UPDATE Habitacion SET Estado = 0 WHERE IdHabitacion = " + idHabitacion;
     dbConn.query(sql, function (err, result) {
       if (err) throw err;
         console.log(result.affectedRows + " record(s) updated");
@@ -261,10 +261,10 @@ module.exports = {
   },
 
   // Eliminar hotel
-  deleteHotel: function (err, id, estado){
+  deleteHotel: function (err, idHotel){
     // var id = "'1'"
     // var estado = "'2'"
-    var sql = "UPDATE Hotel SET Estado = " + estado +  " WHERE IdHotel = " + id;
+    var sql = "UPDATE Hotel SET Estado = 0 WHERE IdHotel = " + idHotel;
     dbConn.query(sql, function (err, result) {
       if (err) throw err;
         console.log(result.affectedRows + " record(s) updated");
@@ -283,10 +283,10 @@ module.exports = {
   },
 
   // Eliminar tarjeta
-  deleteCreditCard: function (err, id, estado){
+  deleteCreditCard: function (err, idTarjeta){
     // var id = "'1'"
     // var estado = "'2'"
-    var sql = "UPDATE Tarjeta SET Estado = " + estado +  " WHERE IdTarjeta = " + id;
+    var sql = "UPDATE Tarjeta SET Estado = 0 WHERE IdTarjeta = " + idTarjeta;
     dbConn.query(sql, function (err, result) {
       if (err) throw err;
         console.log(result.affectedRows + " record(s) updated");
