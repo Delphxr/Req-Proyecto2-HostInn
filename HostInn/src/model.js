@@ -478,13 +478,14 @@ module.exports = {
 // UPDATE
 
   // Actualizar los datos de un administrador
-  updateAdmin: function(id, cedula, nombre, fecha){
-    var sql = "UPDATE Administrador SET Cedula = ?, Nombre = ?, FechaContratacion = ? WHERE IdAdministrador = ?";
-    dbConn.query(sql, [id, cedula, nombre, fecha], function (err, result) {
+  updateAdmin: function(id, cedula, nombre){
+    var sql = "UPDATE Administrador SET Cedula = ?, Nombre = ? WHERE IdAdministrador = ?";
+    dbConn.query(sql, [id, cedula, nombre], function (err, result) {
       if (err) throw err;
         console.log(result.affectedRows + " record(s) updated");
       });
   },
+  
 
   // Actualizar los datos de un cliente
   updateClient: function(id, nombre, apellidos, correo, nacionalidad, fecha){
