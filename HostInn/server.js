@@ -15,7 +15,7 @@ app.use("/views", express.static(__dirname + "/views"));
 const router = require('./src/model');
 
 // variable para manejar los inicios de secion
-var sesion = { usuario: "", password: "", tipo: 0, activo: true }
+var sesion = { usuario: "", password: "", tipo: 0, id: 0,activo: false }
 
 
 //-------------------------------- Controlamos las paginas ------------------------
@@ -44,6 +44,7 @@ app.post('/login', (req, res) => {
                 sesion.usuario = username
                 sesion.password = password
                 sesion.tipo = element.Categoria_IdCategoria
+                sesion.id = element.IdCuenta
 
                 res.redirect('/homepage');
 
@@ -60,6 +61,7 @@ app.get('/logout', function (req, res) {
     sesion.activo = false
     sesion.tipo = 0
     sesion.password = ""
+    sesion.id = 0
     res.redirect('/homepage');
 });
 
@@ -158,6 +160,28 @@ app.post('/reservacion', (req, res) => {
     res.redirect('/homepage');
 })
 
+
+
+// pagina de historial cliente
+app.get('/history-cliente', function (req, res) {
+
+    var idCliente = sesion.id
+
+    const value = router.selectReservationByCliente(function (err, data) {
+        var history = JSON.parse(JSON.stringify(data));
+
+        console.log(history)
+        if (sesion.activo == true) {
+            res.render(path.join(__dirname + '/views/pages/historial.ejs'),
+                {historial: history, user: sesion });
+        } else {
+            res.redirect('/log');
+        }
+   
+
+    }, idCliente);
+
+});
 // -------------------------------------------------------------------------------
 
 

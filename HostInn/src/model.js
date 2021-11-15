@@ -165,7 +165,16 @@ function selectReceptionistReserve (callback){
 
 // Seleccionar reserva 
 function selectReservation (callback){ 
-  dbConn.query("SELECT IdReserva, FehcaInicio, FechaFin, Monto, Estado, Cliente_IdCliente, Habitacion_IdHabitacion, 'Metodo de pago_IdMetodo' FROM Reserva", function (err, result, fields) { 
+  dbConn.query("SELECT * FROM Reserva", function (err, result, fields) { 
+  if (err) 
+    callback(err, null); 
+  else 
+    callback(null,result); 
+  }); 
+};
+
+function selectReservationByCliente (callback, id){ 
+  dbConn.query("SELECT * FROM Reserva WHERE Cliente_IdCliente = " + id, function (err, result, fields) { 
   if (err) 
     callback(err, null); 
   else 
@@ -536,6 +545,7 @@ module.exports = {
   selectReceptionist,
   selectReceptionistReserve,
   selectReservation,
+  selectReservationByCliente,
   selectHotelUnique,
   selectCategories
 }

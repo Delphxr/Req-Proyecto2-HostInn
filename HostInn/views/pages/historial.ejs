@@ -11,9 +11,14 @@
     <%- include('../partials/header',{user : user}); %>
 
         <div style="height: 54px;"> </div>
+        
+        
+
 
         <div class="container px-4 px-lg-5">
-
+            <h1 class="text-dark display-1 strong">
+                Historial
+            </h1>
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 
 
@@ -21,35 +26,37 @@
                 <!--Aqui van las cartas con historial-->
 
                 <% historial.forEach(function(history) { %>
-                    <% if (hotel.Estado==1) {%>
-                        <div class="col mb-5">
+                    <% if (history.Estado==1) {%>
+                        <div class="col mb-5 mt-5">
                             <div class="card text-white bg-dark mb-3 shadoww border-0 rounded-0">
-                                <!-- Product image-->
-                                <img class="card-img-top rounded-0 image-cover" src="<%= hotel.rutaImagen %>"
-                                    alt="https://dummyimage.com/450x400/" height="200"
-                                    style="background-image: url(https://dummyimage.com/450x400/);" />
+
                                 <!-- Product details-->
                                 <div class="card-body p-4">
                                     <div class="text-left">
                                         <!-- Nombre del hotel-->
                                         <h5 class="fw-bolder text-primary">
-                                            <%= hotel.Nombre %>
+                                            Id de Reservacion: <%= history.IdReserva %>
                                         </h5>
-                                        <!-- Direccion del hotel-->
-                                        <span class="bi-geo-alt-fill text-primary"></span>
-                                        <%= hotel.Ubicación %>
+                                        <!-- fecha llegada-->
+                                        <p><span class="bi-calendar-fill text-primary"></span>
+                                            Fecha llegada: <%= history.FechaInicio.substring(0,10); %>
+                                        </p>
+                                        <!-- fecha vuelta-->
+                                        <p><span class="bi-calendar-fill text-primary"></span>
+                                            Fecha llegada: <%= history.FechaFin.substring(0,10); %>
+                                        </p>
+                                        <!-- monto-->
+                                        <p><span class="bi-cash text-primary"></span>
+                                            Monto: <%= history.Monto %>
+                                        </p>
 
-                                            <div class="d-flex justify-content-left small text-primary mt-2 ">
-                                                <% for(let i=0; i < hotel.Estrellas; i++) { %>
-                                                    <div class="bi-star-fill">‎ ‎</div>
-                                                    <% } %>
-                                            </div>
+
                                     </div>
                                 </div>
 
                                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                     <div class="text-left"><a class="btn btn-primary mt-auto"
-                                            href="/rooms/<%= hotel.IdHotel %>">Reservar</a>
+                                            href="/edit_reservacion/<%= history.IdReserva %>">Editar</a>
                                     </div>
                                 </div>
                             </div>
@@ -62,6 +69,7 @@
 
             </div>
         </div>
+        <div class="bgimg-2 darken"></div>
 
         <!-- Footer-->
         <%- include('../partials/footer'); %>
