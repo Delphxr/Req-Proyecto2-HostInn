@@ -73,6 +73,7 @@ app.post('/register', (req, res) => {
     caducidadTarjeta = datos.year + '/' + datos.month + '/1'
     console.log(datos)
 
+    //manejar aqui los datos del registro con la BD
     router.insertCuenta(datos.user, datos.password, 1);
     router.insertClient(nombre[0], nombre[1], datos.email, datos.country, datos.nacimiento);
     router.insertCreditCard(datos.card_num, habitante, datos.code, caducidadTarjeta, 2);
@@ -89,7 +90,6 @@ app.get('/homepage', function (req, res) {
     const value = router.selectHotels(function (err, data) {
         var hoteles = JSON.parse(JSON.stringify(data));
         // nota: se recomiendan imagenes con ratio de 3:2
-
         console.log(sesion)
         res.render(path.join(__dirname + '/views/pages/homepage.ejs'),
             { hoteles: hoteles, user: sesion });
@@ -166,9 +166,8 @@ app.post('/reservacion', (req, res) => {
         edades.push(datos[key])
     }
 
-    router.insertReservation(llegada,salida,idCliente, id_habitacion, 2, cantidad_habitaciones)
-
     //manejar aqui los datos de la reservacion con la BD
+    router.insertReservation(llegada,salida,idCliente, id_habitacion, 2, cantidad_habitaciones)
     res.redirect('/homepage');
 })
 
