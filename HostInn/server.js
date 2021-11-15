@@ -72,9 +72,11 @@ app.post('/register', (req, res) => {
     habitante = nombre[0] + " " + nombre[1];
     caducidadTarjeta = datos.year + '/' + datos.month + '/1'
     console.log(datos)
+    
     router.insertCuenta(datos.user, datos.password, 1);
     router.insertClient(nombre[0], nombre[1], datos.email, datos.country, '2000/1/1');  // Falta input de fecha nacimiento
-    router.insertCreditCard(datos.card_num, habitante, datos.code, caducidadTarjeta, 2)
+    router.insertCreditCard(datos.card_num, habitante, datos.code, caducidadTarjeta, 2);
+    router.insertMethodXClientWeb(2);
     res.redirect('/homepage');
 })
 
@@ -145,7 +147,7 @@ app.get('/reserve/:roomId', function (req, res) {
 });
 
 
-//al recibir un input de un register
+//al recibir un input de un register de reservacion
 app.post('/reservacion', (req, res) => {
     var datos = req.body
     var llegada = datos.llegada

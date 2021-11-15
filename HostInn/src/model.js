@@ -337,7 +337,7 @@ module.exports = {
         resultado = JSON.parse(JSON.stringify(cliente))
         parsed = resultado[0]
         var sql = "INSERT INTO Tarjeta (NumTarjeta, TarjetaHabitante, CCV, FechaCaducidad, Cliente_IdCliente, Metodo_de_pago_IdMetodo) VALUES (?, ?, ?, ?, ?, ?)";
-        dbConn.query(sql, [numTarjeta, tarHabitante, CCV, fecha, parsed.IdCliente, metodo], function (err, result) {
+        dbConn.query(sql, [numTarjeta, tarHabitante, CCV, fecha, parsed.IdCliente + 1, metodo], function (err, result) {
           if (err) throw err;
             console.log("1 record inserted");
         });
@@ -409,10 +409,24 @@ module.exports = {
 
   // Insertar metodo de pago por cliente
   insertMethodXClient: function(cliente, metodo){
-    var sql = "INSERT INTO 'Metodo de pago_has_Cliente' (Cliente_IdCliente, 'Metodo de pago_IdMetodo') VALUES (?, ?)";
+    var sql = "INSERT INTO 'Metodo de pago_has_Cliente' (Cliente_IdCliente, Metodo_de_pago_IdMetodo) VALUES (?, ?)";
     dbConn.query(sql, [cliente, metodo], function (err, result) {
       if (err) throw err;
       console.log("1 record inserted");
+    });
+  },
+
+  // Insertar metodo de pago por cliente desde la web
+  insertMethodXClientWeb: function(metodo){
+    var sql = "SELECT IdCliente FROM Cliente ORDER BY IdCliente DESC LIMIT 1";
+    dbConn.query(sql, function (err, cliente) {
+      resultado = JSON.parse(JSON.stringify(cliente))
+      parsed = resultado[0]
+      var sql = "INSERT INTO Metodo_de_pago_has_Cliente (Cliente_IdCliente, Metodo_de_pago_IdMetodo) VALUES (?, ?)";
+        dbConn.query(sql, [parsed.IdCliente + 1, metodo], function (err, result) {
+        if (err) throw err;
+          console.log("1 record inserted");
+      });
     });
   },
 
