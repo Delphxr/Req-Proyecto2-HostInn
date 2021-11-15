@@ -153,6 +153,17 @@ function selectReceptionist (callback){
   }); 
 }; 
 
+
+// Seleccionar recepcionistas por el ID 
+function selectReceptionistById (callback, id){ 
+  dbConn.query("select administrador.Nombre, administrador.Cedula, recepcionista.Administrador_IdAdministrador, recepcionista.IdRecepcionista from recepcionista inner join administrador on recepcionista.Administrador_IdAdministrador = administrador.IdAdministrador  WHERE recepcionista.IdRecepcionista = " + id, function (err, result) { 
+  if (err) 
+    callback(err, null); 
+  else 
+    callback(null,result); 
+  }); 
+}; 
+
 // Seleccionar recepcionistas 
 function selectReceptionistbyGerente (callback, id){ 
   dbConn.query("select recepcionista.IdRecepcionista ,recepcionista.Administrador_IdAdministrador as idAdminRecepcionista, hotel.nombre as nombre_hotel, (SELECT Nombre from administrador where administrador.IdAdministrador = idAdminRecepcionista limit 1) as nombre_recepcionista  from recepcionista inner join hotel on hotel.IdHotel = recepcionista.Hotel_IdHotel inner join gerente on hotel.IdHotel = Gerente.Hotel_IdHotel inner join administrador on gerente.Administrador_IdAdministrador = administrador.idAdministrador where administrador.Cuenta_IdCuenta = 1", function (err, result) { 
@@ -588,6 +599,7 @@ module.exports = {
   selectMethod,
   selectMethodXClient,
   selectReceptionist,
+  selectReceptionistById,
   selectReceptionistbyGerente,
   selectReceptionistReserve,
   selectReservation,

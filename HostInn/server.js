@@ -243,7 +243,7 @@ app.get('/cancelar-reserva/:idreservacion', function (req, res) {
 
 });
 
-// manejamos el cancelar una reservacion
+// manejamos el gestionar recepcionistas
 app.get('/gestionar-recepcionistas', function (req, res) {
 
     var idgerente = sesion.id 
@@ -265,6 +265,39 @@ app.get('/gestionar-recepcionistas', function (req, res) {
 
 });
 
+// manejamos el editar un recepcionista
+app.get('/editar-recepcionista/:idrecepcionista', function (req, res) {
+
+    var idrecepcionista = req.params.idrecepcionista
+    console.log(idrecepcionista)
+
+    const value = router.selectReceptionistById(function (err, data) {
+        var recepcionista = JSON.parse(JSON.stringify(data));
+
+        console.log(recepcionista)
+        if (sesion.activo == true) {
+            res.render(path.join(__dirname + '/views/pages/editar-recepcionista.ejs'),
+                { recepcionista: recepcionista[0], user: sesion });
+        } else {
+            res.redirect('/log');
+        }
+    }, idrecepcionista);
+
+});
+
+
+
+//al recibir un input de editar_res
+app.post('/editar-recep', (req, res) => {
+    var datos = req.body
+
+
+    console.log(datos)
+
+
+    //aqui manejamos editar el recepcionista
+    res.redirect('/homepage');
+})
 
 
 // -------------------------------------------------------------------------------
