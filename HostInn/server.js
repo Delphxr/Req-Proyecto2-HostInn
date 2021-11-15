@@ -168,7 +168,7 @@ app.post('/reservacion', (req, res) => {
     }
 
     //manejar aqui los datos de la reservacion con la BD
-    router.insertReservation(llegada,salida, idCuenta, id_habitacion, 2, cantidad_habitaciones)  
+    router.insertReservation(llegada, salida, idCuenta, id_habitacion, 2, cantidad_habitaciones)
     res.redirect('/homepage');
 })
 
@@ -228,7 +228,7 @@ app.post('/editar-res', (req, res) => {
     console.log(datos)
 
 
-    router.updateReservation(num_reservacion,llegada,salida);
+    router.updateReservation(num_reservacion, llegada, salida);
     res.redirect('/homepage');
 })
 
@@ -247,7 +247,7 @@ app.get('/cancelar-reserva/:idreservacion', function (req, res) {
 // manejamos el gestionar recepcionistas
 app.get('/gestionar-recepcionistas', function (req, res) {
 
-    var idgerente = sesion.id 
+    var idgerente = sesion.id
 
     const value = router.selectReceptionistbyGerente(function (err, data) {
         var recepcionistas = JSON.parse(JSON.stringify(data));
@@ -340,6 +340,52 @@ app.get('/editar-gerente/:idgerente', function (req, res) {
 
 });
 
+
+// manejamos registrar un nuevo adminiiador
+app.get('/nuevo-admin/:tipo', function (req, res) {
+
+    var tipo = req.params.tipo //esto es el tipo de usuario
+    /*
+    2	Gerente
+    3	Gerente de alto nivel
+    4	Recepcionista
+    */
+    console.log(tipo)
+
+    const value = router.selectHotels(function (err, data) {
+        var hoteles = JSON.parse(JSON.stringify(data));
+
+        console.log(hoteles)
+        if (sesion.activo == true) {
+            res.render(path.join(__dirname + '/views/pages/nuevoAdmin.ejs'),
+                { hoteles: hoteles, user: sesion, tipo: tipo });
+        }
+        else {
+            res.redirect('/log');
+        }
+    });
+
+
+});
+
+//al recibir un input de nuevo admin
+app.post('/insertar-admin/:tipo', (req, res) => {
+    var datos = req.body
+    var tipo = req.params.tipo//esto es el tipo de usuario
+    /*
+    2	Gerente
+    3	Gerente de alto nivel
+    4	Recepcionista
+    */
+    var today = new Date();
+
+    var fechaContratacion = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+
+    console.log(datos, tipo) //si hay mas de un hotel, se reciben como array (SE RECIBE EL ID DEL HOTEL)
+
+    //aqui manejamos editar el administrador
+    res.redirect('/homepage');
+})
 // -------------------------------------------------------------------------------
 
 
