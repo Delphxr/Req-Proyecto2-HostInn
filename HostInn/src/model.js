@@ -145,7 +145,7 @@ function selectMethodXClient (callback){
 
 // Seleccionar recepcionistas 
 function selectReceptionist (callback){ 
-  dbConn.query("SELECT IdRecepcionista, Descripcion, Hotel_IdHotel, Administrador_IdAdministrador FROM Recepcionista", function (err, result, fields) { 
+  dbConn.query("SELECT IdRecepcionista, Descripcion, Hotel_IdHotel, Administrador_IdAdministrador FROM Recepcionista", function (err, result) { 
   if (err) 
     callback(err, null); 
   else 
@@ -155,7 +155,7 @@ function selectReceptionist (callback){
 
 // Seleccionar recepcionistas 
 function selectReceptionistbyGerente (callback, id){ 
-  dbConn.query("select recepcionista.IdRecepcionista ,recepcionista.Administrador_IdAdministrador as idAdminRecepcionista, hotel.nombre as nombre_hotel, (SELECT Nombre from administrador where administrador.IdAdministrador = idAdminRecepcionista limit 1) as nombre_recepcionista  from recepcionista inner join hotel on hotel.IdHotel = recepcionista.Hotel_IdHotel inner join gerente on hotel.IdHotel = Gerente.Hotel_IdHotel inner join administrador on gerente.Administrador_IdAdministrador = administrador.idAdministrador where administrador.Cuenta_IdCuenta = 1", function (err, result, fields) { 
+  dbConn.query("select recepcionista.IdRecepcionista ,recepcionista.Administrador_IdAdministrador as idAdminRecepcionista, hotel.nombre as nombre_hotel, (SELECT Nombre from administrador where administrador.IdAdministrador = idAdminRecepcionista limit 1) as nombre_recepcionista  from recepcionista inner join hotel on hotel.IdHotel = recepcionista.Hotel_IdHotel inner join gerente on hotel.IdHotel = Gerente.Hotel_IdHotel inner join administrador on gerente.Administrador_IdAdministrador = administrador.idAdministrador where administrador.Cuenta_IdCuenta = 1", function (err, result) { 
   if (err) 
     callback(err, null); 
   else 
@@ -166,7 +166,7 @@ function selectReceptionistbyGerente (callback, id){
 
 // Seleccionar recepcionistas por reserva 
 function selectReceptionistReserve (callback){ 
-  dbConn.query("SELECT Recepcionista_IdRecepcionista, Reserva_IdReserva FROM Recepcionista_has_Reserva", function (err, result, fields) { 
+  dbConn.query("SELECT Recepcionista_IdRecepcionista, Reserva_IdReserva FROM Recepcionista_has_Reserva", function (err, result) { 
   if (err) 
     callback(err, null); 
   else 
@@ -176,7 +176,7 @@ function selectReceptionistReserve (callback){
 
 // Seleccionar reserva 
 function selectReservation (callback){ 
-  dbConn.query("SELECT * FROM Reserva", function (err, result, fields) { 
+  dbConn.query("SELECT * FROM Reserva", function (err, result) { 
   if (err) 
     callback(err, null); 
   else 
@@ -186,7 +186,7 @@ function selectReservation (callback){
 
 // Seleccionar reserva 
 function selectReservationUnique (callback, id){ 
-  dbConn.query("SELECT * FROM Reserva WHERE IdReserva = " + id, function (err, result, fields) { 
+  dbConn.query("SELECT * FROM Reserva WHERE IdReserva = " + id, function (err, result) { 
   if (err) 
     callback(err, null); 
   else 
@@ -195,7 +195,7 @@ function selectReservationUnique (callback, id){
 };
 
 function selectReservationByCliente (callback, id){ 
-  dbConn.query("SELECT * FROM Reserva WHERE Cliente_IdCliente = " + id, function (err, result, fields) { 
+  dbConn.query("SELECT * FROM Reserva WHERE Cliente_IdCliente = (SELECT Cliente.IdCliente FROM Cuenta INNER JOIN Cliente on  Cuenta.IdCuenta = Cliente.Cuenta_IdCuenta WHERE Cuenta_IdCuenta = " + id + ")", function (err, result) { 
   if (err) 
     callback(err, null); 
   else 
@@ -272,7 +272,7 @@ module.exports = {
   },
 
   // Eliminar reserva
-  deleteReservation: function (err, id, estado){
+  deleteReservation: function (err, id){
     // var id = "'1'"
     // var estado = "'2'"
     var sql = "UPDATE Reserva SET Estado = " + estado +  " WHERE IdReserva = " + id;

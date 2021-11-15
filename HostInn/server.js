@@ -167,9 +167,7 @@ app.post('/reservacion', (req, res) => {
 
 // pagina de historial cliente
 app.get('/history-cliente', function (req, res) {
-
     var idCliente = sesion.id
-
     const value = router.selectReservationByCliente(function (err, data) {
         var history = JSON.parse(JSON.stringify(data));
 
@@ -180,10 +178,7 @@ app.get('/history-cliente', function (req, res) {
         } else {
             res.redirect('/log');
         }
-
-
     }, idCliente);
-
 });
 
 
@@ -235,6 +230,7 @@ app.get('/cancelar-reserva/:idreservacion', function (req, res) {
     var idreservacion = req.params.idreservacion
     console.log(idreservacion)
     //manejar aqui la cancelacion
+    router.deleteReservation(idreservacion);
     res.redirect('/homepage');
 
 });
