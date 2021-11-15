@@ -13,6 +13,7 @@ app.use("/public", express.static(__dirname + "/public"));
 app.use("/views", express.static(__dirname + "/views"));
 
 const router = require('./src/model');
+const { JsxEmit } = require('typescript');
 
 // variable para manejar los inicios de secion
 var sesion = { usuario: "", password: "", tipo: 0, id: 0, activo: false }
@@ -156,7 +157,7 @@ app.post('/reservacion', (req, res) => {
     var ninos = datos.ninos
     var cantidad_habitaciones = datos.cantidad
     var id_habitacion = datos.idHabitacion
-    var idCliente = sesion.id
+    var idCuenta = sesion.id
 
     console.log(datos)
 
@@ -167,7 +168,7 @@ app.post('/reservacion', (req, res) => {
     }
 
     //manejar aqui los datos de la reservacion con la BD
-    router.insertReservation(llegada,salida,idCliente, id_habitacion, 2, cantidad_habitaciones)
+    router.insertReservation(llegada,salida, idCuenta, id_habitacion, 2, cantidad_habitaciones)  
     res.redirect('/homepage');
 })
 
