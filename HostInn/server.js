@@ -157,7 +157,6 @@ app.post('/reservacion', (req, res) => {
     var cantidad_habitaciones = datos.cantidad
     var id_habitacion = datos.idHabitacion
     var idCliente = sesion.id
-    var monto = datos.precio
 
     console.log(datos)
 
@@ -167,7 +166,7 @@ app.post('/reservacion', (req, res) => {
         edades.push(datos[key])
     }
 
-    router.insertReservation(llegada,salida,idCliente, id_habitacion, 2)
+    router.insertReservation(llegada,salida,idCliente, id_habitacion, 2, cantidad_habitaciones)
 
     //manejar aqui los datos de la reservacion con la BD
     res.redirect('/homepage');
