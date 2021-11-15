@@ -65,7 +65,17 @@ function selectCheck (callback){
 
 // Seleccionar gerente
 function selectManagers (callback){
-  dbConn.query("SELECT IdGerente, Descripcion, Hotel_IdHotel, Administrador_IdAdministrador FROM Cuenta", function (err, result) {
+  dbConn.query("select administrador.IdAdministrador, administrador.Cedula, administrador.Nombre, hotel.Nombre as nombreHotel from administrador inner join gerente on administrador.IdAdministrador = gerente.Administrador_IdAdministrador inner join hotel on gerente.Hotel_IdHotel = hotel.IdHotel", function (err, result) {
+  if (err)
+    callback(err, null);
+  else
+    callback(null,result);
+  });
+};
+
+// Seleccionar gerente por id
+function selectManagersByID (callback,id){
+  dbConn.query("select gerente.Administrador_IdAdministrador, administrador.Cedula, administrador.Nombre from administrador inner join gerente on administrador.IdAdministrador = gerente.Administrador_IdAdministrador where administrador.IdAdministrador = " + id, function (err, result) {
   if (err)
     callback(err, null);
   else
@@ -598,6 +608,7 @@ module.exports = {
   selectAccounts,
   selectCheck,
   selectManagers,
+  selectManagersByID,
   selectHighManagers,
   selectHighManagersXHotel,
   selectRooms,

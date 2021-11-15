@@ -277,8 +277,8 @@ app.get('/editar-recepcionista/:idrecepcionista', function (req, res) {
 
         console.log(recepcionista)
         if (sesion.activo == true) {
-            res.render(path.join(__dirname + '/views/pages/editar-recepcionista.ejs'),
-                { recepcionista: recepcionista[0], user: sesion });
+            res.render(path.join(__dirname + '/views/pages/editar-administrador.ejs'),
+                { administrador: recepcionista[0], user: sesion });
         } else {
             res.redirect('/log');
         }
@@ -289,17 +289,56 @@ app.get('/editar-recepcionista/:idrecepcionista', function (req, res) {
 
 
 //al recibir un input de editar_res
-app.post('/editar-recep', (req, res) => {
+app.post('/update-admin', (req, res) => {
     var datos = req.body
 
 
     console.log(datos)
 
     router.updateAdmin(datos.cedula, datos.nombre, datos.idAdministrador)
-    //aqui manejamos editar el recepcionista
+    //aqui manejamos editar el administrador
     res.redirect('/homepage');
 })
 
+
+
+
+// manejamos el gestionar recepcionistas
+app.get('/gestionar-gerentes', function (req, res) {
+
+
+    const value = router.selectManagers(function (err, data) {
+        var gerentes = JSON.parse(JSON.stringify(data));
+
+        console.log(gerentes)
+        if (sesion.activo == true) {
+            res.render(path.join(__dirname + '/views/pages/gerentes.ejs'),
+                { gerentes: gerentes, user: sesion });
+        } else {
+            res.redirect('/log');
+        }
+    });
+});
+
+// manejamos el editar un gerente
+app.get('/editar-gerente/:idgerente', function (req, res) {
+
+    var idgerente = req.params.idgerente
+    console.log(idgerente)
+
+    const value = router.selectManagersByID(function (err, data) {
+        var gerente = JSON.parse(JSON.stringify(data));
+
+        console.log(gerente)
+        if (sesion.activo == true) {
+            res.render(path.join(__dirname + '/views/pages/editar-administrador.ejs'),
+                { administrador: gerente[0], user: sesion });
+        } else {
+            res.redirect('/log');
+        }
+    }, idgerente);
+
+});
 
 // -------------------------------------------------------------------------------
 
