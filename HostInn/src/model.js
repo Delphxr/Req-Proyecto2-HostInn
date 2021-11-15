@@ -115,7 +115,7 @@ function selectOneRoom (callback, idroom){
 
 // Seleccionar habitaciones pod hotel
 function selectRoomsUnique (callback, idHotel){
-  dbConn.query("SELECT IdHabitacion, h.Nombre, Tipo, Num_Camas, Capacidad, h.Descripcion, Precio, h.Estado, Hotel_IdHotel, a.Nombre as nombreHotel, a.Descripcion as descripcionHotel FROM Habitacion h INNER JOIN Hotel a ON h.Hotel_IdHotel = a.IdHotel WHERE Hotel_IdHotel =" + idHotel, function (err, result) {
+  dbConn.query("SELECT IdHabitacion, h.Nombre, Tipo, Num_Camas, Capacidad, h.Descripcion, Precio, h.Estado, Hotel_IdHotel, a.Nombre as nombreHotel, a.Descripcion as descripcionHotel, a.Ubicación as Ubicación_hotel FROM Habitacion h INNER JOIN Hotel a ON h.Hotel_IdHotel = a.IdHotel WHERE Hotel_IdHotel =" + idHotel, function (err, result) {
   if (err)
     callback(err, null);
   else
@@ -309,7 +309,7 @@ module.exports = {
     },
 
   // Insertar un nuevo cliente 
-  insertClient: function(err, nombre, apellidos, correo, nacionalidad, fecha, cuenta){
+  insertClient: function(nombre, apellidos, correo, nacionalidad, fecha, cuenta){
     //var cedula = 123123
     //var nombre = "Max"
     //var fecha =  
@@ -321,7 +321,7 @@ module.exports = {
     },
 
   // Insertar una nueva cuenta
-  insertCuenta: function(err, user, contrasenia, categoria){
+  insertCuenta: function(user, contrasenia, categoria){
     //var user = "'a'"
     //var contrasenia = "'asd'"
     var sql = "INSERT INTO Cuenta (Username, Contraseña,Categoria_IdCategoria) VALUES ("+ user +"," + contrasenia + ","+ categoria +")";
