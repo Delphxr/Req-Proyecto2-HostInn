@@ -306,12 +306,18 @@ module.exports = {
     },
 
   // Insertar un nuevo cliente 
-  insertClient: function(nombre, apellidos, correo, nacionalidad, fecha, cuenta){
-    var sql = "INSERT INTO Cliente (Nombre, Apeliidos, Correo, Nacionalidad, FechaNacimiento, Cuenta_IdCuenta) VALUES (?,?,?,?,?,?)";
-      dbConn.query(sql, [nombre, apellidos, correo, nacionalidad, fecha, cuenta], function (err, result) {
-        if (err) throw err;
-          console.log("1 record inserted");
-      });
+  insertClient: function(nombre, apellidos, correo, nacionalidad, fecha){
+    var sql = "SELECT IdCuenta FROM Cuenta ORDER BY IdCuenta DESC LIMIT 1";
+    dbConn.query(sql, function (err, cuenta) {
+      if (err) throw err;
+        resultado = JSON.parse(JSON.stringify(cuenta))
+        parsed = resultado[0]
+        var sql = "INSERT INTO Cliente (Nombre, Apeliidos, Correo, Nacionalidad, FechaNacimiento, Cuenta_IdCuenta) VALUES (?,?,?,?,?,?)";
+        dbConn.query(sql, [nombre, apellidos, correo, nacionalidad, fecha, parsed.IdCuenta], function (err, result) {
+          if (err) throw err;
+            console.log("1 record inserted");
+        });
+    });
     },
 
   // Insertar una nueva cuenta
@@ -322,6 +328,21 @@ module.exports = {
           console.log("1 record inserted");
       });
     },
+
+  // Insertar una tarjeta
+  insertCreditCard: function(numTarjeta, tarHabitante, CCV, fecha, metodo){
+    var sql = "SELECT IdCliente FROM Cliente ORDER BY IdCliente DESC LIMIT 1";
+    dbConn.query(sql, function (err, cliente) {
+      if (err) throw err;
+        resultado = JSON.parse(JSON.stringify(cliente))
+        parsed = resultado[0]
+        var sql = "INSERT INTO Tarjeta (NumTarjeta, TarjetaHabitante, CCV, FechaCaducidad, Cliente_IdCliente, Metodo_de_pago_IdMetodo) VALUES (?, ?, ?, ?, ?, ?)";
+        dbConn.query(sql, [numTarjeta, tarHabitante, CCV, fecha, parsed.IdCliente, metodo], function (err, result) {
+          if (err) throw err;
+            console.log("1 record inserted");
+        });
+    });
+  },
 
   // Insertar una nueva factura
   insertCheck: function(numFactura, descripcion, fecha, total, reserva){
@@ -417,15 +438,6 @@ module.exports = {
   insertReservation: function(fechaInicio, fechaFinal, monto, cliente, habitacion, metodo){
     var sql = "INSERT INTO Reserva (FechaInicio, FechaFin, Monto, Cliente_IdCliente, Habitacion_IdHabitacion, 'Metodo de pago_IdMetodo') VALUES (?, ?, ?, ?, ?, ?)";
     dbConn.query(sql, [fechaInicio, fechaFinal, monto, cliente, habitacion, metodo], function (err, result) {
-      if (err) throw err;
-        console.log("1 record inserted");
-    });
-  },
-
-  // Insertar una tarjeta
-  insertCreditCard: function(numTarjeta, tarHabitante, CCV, fecha, cliente, metodo){
-    var sql = "INSERT INTO Tarjeta (NumTarjeta, TarjetaHabitante, CCV, FechaCaducidad, Cliente_IdCliente, 'Metodo de pago_IdMetodo') VALUES (?, ?, ?, ?, ?, ?)";
-    dbConn.query(sql, [numTarjeta, tarHabitante, CCV, fecha, cliente, metodo], function (err, result) {
       if (err) throw err;
         console.log("1 record inserted");
     });

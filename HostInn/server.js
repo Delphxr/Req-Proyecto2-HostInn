@@ -67,10 +67,14 @@ app.get('/logout', function (req, res) {
 
 //al recibir un input de un register
 app.post('/register', (req, res) => {
-    datos = req.body
+    datos = req.body;
+    nombre = datos.nombre.split(" ");
+    habitante = nombre[0] + " " + nombre[1];
+    caducidadTarjeta = datos.year + '/' + datos.month + '/1'
     console.log(datos)
-
-    //manejar aqui el register con la BD
+    router.insertCuenta(datos.user, datos.password, 1);
+    router.insertClient(nombre[0], nombre[1], datos.email, datos.country, '2000/1/1');  // Falta input de fecha nacimiento
+    router.insertCreditCard(datos.card_num, habitante, datos.code, caducidadTarjeta, 2)
     res.redirect('/homepage');
 })
 
