@@ -5,109 +5,103 @@
     <%- include('../partials/head'); %>
 </head>
 
-<body>
+<body style="background-image: url(http://localhost:3000/public/assets/mountain.jpg);">
 
     <!-- navbar-->
     <%- include('../partials/header',{user : user}); %>
 
+        <div style="height: 54px;"> </div>
 
+        <div class="container-fluid">
+            <div class="row" style="display: flex; justify-content: space-between;">
+                <div class="col-6" style="flex-basis: 50%; box-sizing: border-box;">
+                    <div class="card shadoww mx-4 mb-3 mt-5 pt-3 bg-dark px-3 pb-4">
+                        <h4 class="text-light display-4"> Reservar <%= habitacion.Nombre %>
+                        </h4>
+                        <form  method="post" action="/reservacion">
+                            <div class="form-row">
 
-        <div class="bgimg-3" style="background-image: url('<%= hotel.rutaImagen %>'); min-height: 60vh;"></div>
-
-
-
-        <!-- Section about -->
-        <section class="py-5 shadoww" id="about"
-            style="background-image:  linear-gradient(120deg, #ffda3e 0%, #ffd630 100%); ">
-            <div class="container px-4 py-5">
-
-                <h1 class="text-dark display-1 strong"><%= hotel.nombreHotel %>:</h1>
-
-                <h4 class="lead" style=" position:relative; z-index: 50;">
-                    <%= hotel.descripcionHotel %>
-                </h4>
-
-            </div>
-
-
-        </section>
-
-
-
-
-        <!-- Section habitaciones-->
-        <section class="py-3 " id="hoteles"
-            style="background-image:  linear-gradient(120deg, #ffffff 0%, #ebedee 100%);">
-            <div class="container px-4 px-lg-5">
-
-                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
-                    style="transform: translateY(-75px);">
-
-
-
-
-
-
-                    <!--Aqui van las cartas con los hoteles-->
-
-                    <% habitaciones.forEach(function(habitacion) { %>
-                        <% if (habitacion.Estado == 1) {%>
-                        <div class="col mb-5">
-                            <div class="card text-white bg-dark mb-3 shadoww border-0 rounded-0">
-                                <!-- Product image-->
-                                <img class="card-img-top rounded-0 image-cover" src="<%= habitacion.rutaImagen %>"
-                                    alt="https://dummyimage.com/450x300/" height="200" style="background-image: url(https://dummyimage.com/450x400/);"/>
-                                <!-- Product details-->
-                                <div class="card-body p-4 pb-0">
-                                    <div class="text-left">
-                                        <!-- Nombre-->
-                                        <h5 class="fw-bolder text-primary">
-                                            <%= habitacion.Nombre %>
-                                        </h5>
-            
-                                        <p class="text-primary">Tipo: <span class="text-light"> <%= habitacion.Tipo %></span> </p>
-                                            
-                                        <p class="text-primary">Camas: <span class="text-light"> <%= habitacion.Num_Camas %></span> </p>
-
-                                        <p class="text-primary">Capacidad: <span class="text-light"> <%= habitacion.Capacidad %> personas</span> </p>
-
-                                            
+                                <div class="form-group col pb-4">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label class="text-primary" for="inputEmail4">Fecha llegada:</label>
+                                            <input type="date" class="form-control" id="inputEmail4" name="llegada"
+                                                placeholder="llegada">
+                                        </div>
+                                        <div class="col-6 text-right">
+                                            <label class="text-primary text-right" for="inputEmail4">Fecha
+                                                salida:</label>
+                                            <input type="date" class="form-control" id="inputEmail4" name="salida"
+                                                placeholder="llegada">
+                                        </div>
                                     </div>
+
                                 </div>
 
-                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                    <div class="text-left"><a class="btn btn-primary mt-auto" href="#">Reservar</a>
+                                <div class="form-group col pb-4">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label class="text-primary" for="inputEmail4">Adultos:</label>
+                                            <input type="number" min="0" value="0" class="form-control" id="inputEmail4" name="adultos"
+                                                placeholder="00">
+                                        </div>
+                                        <div class="col-6 text-right">
+                                            <label class="text-primary text-right" for="inputEmail4">Niños:</label>
+                                            <input type="number" min="0" value="0" class="form-control" id="ninos" name="ninos"
+                                                placeholder="00">
+                                        </div>
                                     </div>
+
                                 </div>
+
+
+                                <div class="form-group col pb-4">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label class="text-primary" for="inputEmail4">Cantidad habitaciones:</label>
+                                            <input type="number" min="0" class="form-control" id="inputEmail4" name="cantidad"
+                                                placeholder="00">
+                                        </div>
+                                        <div class="col-6 text-right" id="columnaNinos">
+                                            <label class="text-primary text-right" for="inputEmail4">Edades de
+                                                Niños:</label>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
                             </div>
-                        </div>
-                        <% } %>
-                    <% }); %>
+
+                            <button type="submit" class="btn btn-primary">Reservar</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-6" style="flex-basis: 50%; box-sizing: border-box; overflow: hidden;">
 
 
+                    <img src='https://picsum.photos/200/300' class="mx-4 mb-3 mt-5 shadoww img-fluid rounded"
+                        style="height: 83vh; width: 93vh;"></img>
 
 
                 </div>
             </div>
-
-        </section>
-
-
-
-
-        <div class="bgimg-2 darken"></div>
-
-
-        
-
-
-
-
-
+        </div>
 
         <!-- Footer-->
         <%- include('../partials/footer'); %>
 
+<script>
+    $('#ninos').change(function () {
+        console.log(this.value)
+        $('#columnaNinos input.form-control').remove();
+        for (var i = 1; i <= this.value; i++) {
+            $('#columnaNinos').append(
+                '<input type="number" value="0" "min="0" max="17" class="form-control mb-2" name="edad-' + i + '" required>'
+            );
+        }
+    });
+</script>
 
 </body>
 

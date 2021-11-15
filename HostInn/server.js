@@ -13,20 +13,20 @@ app.use("/public", express.static(__dirname + "/public"));
 app.use("/views", express.static(__dirname + "/views"));
 
 const router = require('./src/model');
-const { selectRoomsUnique } = require('./src/model');
 
 // variable para manejar los inicios de secion
-var sesion = { usuario: "", password: "", tipo: 0, activo: false }
+var sesion = { usuario: "", password: "", tipo: 0, activo: true }
 
 
 //-------------------------------- Controlamos las paginas ------------------------
 app.get('/', function (req, res) {
-    res.redirect('/homepage');});
+    res.redirect('/homepage');
+});
 
 
 // pantalla de inicio de sesion / registro
 app.get('/log', function (req, res) {
-    if (sesion.activo == true) {res.redirect('/homepage');}
+    if (sesion.activo == true) { res.redirect('/homepage'); }
     res.render(path.join(__dirname + '/views/pages/register.ejs'));
 });
 
@@ -38,19 +38,19 @@ app.post('/login', (req, res) => {
     const value = router.selectAccounts(function (err, data) {
         var users = JSON.parse(JSON.stringify(data));
         users.forEach(element => {
-            
+
             if (element.Username == username && element.Contraseña == password) {
                 sesion.activo = true
                 sesion.usuario = username
                 sesion.password = password
-                sesion.tipo = 0
-                
+                sesion.tipo = element.Categoria_IdCategoria
+
                 res.redirect('/homepage');
-                
+
             }
         });
-        if (sesion.activo == false){ res.redirect('/log'); }
-        
+        if (sesion.activo == false) { res.redirect('/log'); }
+
     })
 })
 
@@ -65,7 +65,10 @@ app.get('/logout', function (req, res) {
 
 //al recibir un input de un register
 app.post('/register', (req, res) => {
-    console.log(req.body)
+    datos = req.body
+    console.log(datos)
+
+    //manejar aqui el register con la BD
     res.redirect('/homepage');
 })
 
@@ -109,7 +112,7 @@ app.get('/rooms/:hotelId', function (req, res) {
         // nota: se recomiendan imagenes con ratio de 3:2
         console.log(habitaciones, hotel)
         res.render(path.join(__dirname + '/views/pages/rooms.ejs'),
-            { hotel: hotel, habitaciones: habitaciones,user: sesion });
+            { hotel: hotel, habitaciones: habitaciones, user: sesion });
         //__dirname : It will resolve to your project folder.
     }, hotelId);
 
@@ -123,12 +126,37 @@ app.get('/reserve/:roomId', function (req, res) {
     const value = router.selectOneRoom(function (err, data) {
         var habitacion = JSON.parse(JSON.stringify(data));
 
-        console.log("aaaaaaaaaaaaaaaaaaaaaaaaa")
         console.log(habitacion)
-        res.redirect('/homepage');
+        if (sesion.activo == true) {
+            res.render(path.join(__dirname + '/views/pages/reservar.ejs'),
+                {habitacion: habitacion[0], user: sesion });
+        } else {
+            res.redirect('/log');
+        }
+
     }, roomId);
 
 });
+
+
+//al recibir un input de un register
+app.post('/reservacion', (req, res) => {
+    var datos = req.body
+    var llegada = datos.llegada
+    var salida = datos.salida
+    var adultos = datos.adultos
+    var ninos = datos.ninos
+    var cantidad_habitaciones = datos.cantidad
+
+    var edades = []
+    for (var i = 1; i <= ninos; i++){
+        var key = "edad-" + i
+        edades.push(datos[key])
+    }
+
+    //manejar aqui los datos de la reservacion con la BD
+    res.redirect('/homepage');
+})
 
 // -------------------------------------------------------------------------------
 
