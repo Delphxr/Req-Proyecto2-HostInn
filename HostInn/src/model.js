@@ -243,6 +243,15 @@ function selectCategories (callback){
     callback(null,result);
   });
 };
+
+function selectReservationByHotel(callback,id){
+  dbConn.query("SELECT Reserva.IdReserva,Reserva.FechaInicio,Reserva.FechaFin,Reserva.Cliente_IdCliente,Habitacion_IdHabitacion,Habitacion.Tipo,Reserva.Metodo_de_pago_IdMetodo,Cliente.Nombre,Cliente.Apeliidos FROM Reserva INNER JOIN Habitacion on Reserva.Habitacion_IdHabitacion = Habitacion.IdHabitacion INNER JOIN Hotel on Habitacion.Hotel_IdHotel = Hotel.IdHotel INNER JOIN Cuenta on Cuenta.IdCuenta = "+ id +" INNER JOIN Administrador on Administrador.Cuenta_IdCuenta = Cuenta.IdCuenta INNER JOIN Recepcionista on Recepcionista.Administrador_IdAdministrador = Administrador.IdAdministrador INNER JOIN Cliente on Cliente.IdCliente = Reserva.Cliente_IdCliente WHERE Recepcionista.Hotel_IdHotel = Hotel.IdHotel AND Reserva.Estado = 1", function (err, result){
+    if(err)
+      callback(err,null);
+    else
+      callback(null,result);
+  });
+};
 module.exports = {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // COMPLEMENTARIOS
