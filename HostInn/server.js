@@ -22,14 +22,14 @@ var sesion = { usuario: "", password: "", tipo: 0, id: 0, activo: false }
 
 //funcion para hacer el id de las imagenes que subimos
 function makeid(length) {
-    var result           = '';
-    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     var charactersLength = characters.length;
-    for ( var i = 0; i < length; i++ ) {
-      result += characters.charAt(Math.floor(Math.random() * 
- charactersLength));
-   }
-   return result;
+    for (var i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() *
+            charactersLength));
+    }
+    return result;
 }
 
 
@@ -407,7 +407,7 @@ app.get('/editar-hotel/:idHotel', function (req, res) {
         } else {
             res.redirect('/log');
         }
-    },idHotel);
+    }, idHotel);
 });
 
 // manejamos registrar un nuevo adminiiador
@@ -459,11 +459,11 @@ app.post('/insertar-admin/:tipo', (req, res) => {
 
 
 
-app.post( "/update-hotel", upload.single("file" /* name attribute of <file> element in your form */),
+app.post("/update-hotel", upload.single("file" /* name attribute of <file> element in your form */),
     (req, res) => {
         //creamos el nombre de la imagen que estamos subiendo
 
-        const image_name = "image" +  makeid(15);
+        const image_name = "image" + makeid(15);
         const tempPath = req.file.path;
         const targetPath = path.join(__dirname, "/public/uploads/" + image_name + ".png");
 
@@ -487,6 +487,54 @@ app.post( "/update-hotel", upload.single("file" /* name attribute of <file> elem
         //el resto
     }
 );
+
+app.get('/nuevo-hotel', function (req, res) {
+
+    if (sesion.activo == true) {
+        res.render(path.join(__dirname + '/views/pages/insertar-hotel.ejs'),
+            { user: sesion });
+    }
+    else {
+        res.redirect('/log');
+    }
+});
+
+
+
+app.post("/insert-hotel", upload.single("file" /* name attribute of <file> element in your form */),
+    (req, res) => {
+        //creamos el nombre de la imagen que estamos subiendo
+
+        const image_name = "image" + makeid(15);
+        const tempPath = req.file.path;
+        const targetPath = path.join(__dirname, "/public/uploads/" + image_name + ".png");
+
+        if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg") {
+            fs.rename(tempPath, targetPath, err => {
+                if (err) return handleError(err, res);
+
+                res.redirect('/homepage');
+            });
+        } else {
+            fs.unlink(tempPath, err => {
+                if (err) return handleError(err, res);
+
+                res.redirect('/homepage');
+            });
+        }
+
+        var datos = req.body
+        var ruta_imagen = "public/uploads/" + image_name + ".png"
+        router.insertHotel(datos.nombre, datos.estrellas, datos.descripcion, datos.ubicacion, ruta_imagen)
+        //el resto
+    }
+);
+
+
+
+
+
+
 // -------------------------------------------------------------------------------
 
 

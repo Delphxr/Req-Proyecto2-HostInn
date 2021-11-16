@@ -125,7 +125,7 @@ function selectOneRoom (callback, idroom){
 
 // Seleccionar habitaciones pod hotel
 function selectRoomsUnique (callback, idHotel){
-  dbConn.query("SELECT IdHabitacion, h.Nombre, Tipo, Num_Camas, Capacidad, h.Descripcion, Precio, h.Estado, h.Imagen, Hotel_IdHotel, a.Nombre as nombreHotel, a.Descripcion as descripcionHotel, a.Ubicación as Ubicación_hotel FROM Habitacion h INNER JOIN Hotel a ON h.Hotel_IdHotel = a.IdHotel WHERE Hotel_IdHotel =" + idHotel, function (err, result) {
+  dbConn.query("SELECT IdHabitacion, h.Nombre, Tipo, Num_Camas, Capacidad, h.Descripcion, Precio, h.Estado, h.Imagen, Hotel_IdHotel, a.Nombre as nombreHotel, a.Descripcion as descripcionHotel, a.Ubicación as Ubicación_hotel, a.Imagen as ImagenHotel FROM Habitacion h INNER JOIN Hotel a ON h.Hotel_IdHotel = a.IdHotel WHERE Hotel_IdHotel =" + idHotel, function (err, result) {
   if (err)
     callback(err, null);
   else
@@ -411,9 +411,9 @@ module.exports = {
   },
 
   // Insertar un nuevo hotel
-  insertHotel: function(nombre, estrellas, descripcion, ubicacion){
-    var sql = "INSERT INTO Hotel (Nombre, Estrellas, Descripcion, Ubicacion) VALUES (?, ?, ?, ?)";
-    dbConn.query(sql, [nombre, estrellas, descripcion, ubicacion], function (err, result) {
+  insertHotel: function(nombre, estrellas, descripcion, ubicacion, imagen){
+    var sql = "INSERT INTO Hotel (Nombre, Estrellas, Descripcion, Ubicación, Imagen, Estado) VALUES (?, ?, ?, ?, ?, 1)";
+    dbConn.query(sql, [nombre, estrellas, descripcion, ubicacion, imagen], function (err, result) {
       if (err) throw err;
         console.log("1 record inserted");
     });

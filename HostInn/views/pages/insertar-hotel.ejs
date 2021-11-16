@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head'); %>
+</head>
+
+<body style="background-image: url(http://localhost:3000/public/assets/mountain.jpg);">
+
+    <!-- navbar-->
+    <%- include('../partials/header',{user : user}); %>
+
+        <div style="height: 54px;"> </div>
+
+        <div class="container-fluid">
+
+
+            <div class="card shadoww mx-4 mb-3 mt-5 pt-3 bg-dark px-3 pb-4">
+                <h4 class="text-light display-4"> Nuevo Hotel:
+                </h4>
+                <form method="post" enctype="multipart/form-data" action="/insert-hotel">
+                    <div class="form-row">
+
+                        <div class="form-group col pb-4">
+                            <div class="row">
+                                <div class="pr-5">
+                                    <label class="text-primary" for="inputEmail4">Nombre:</label>
+                                    <input type="text" class="form-control" id="inputEmail4"
+                                        name="nombre" placeholder="Hotel Williams">
+                                </div>
+
+                                <div class="text-right">
+                                    <label class="text-primary text-right" for="inputEmail4">Estrellas:</label>
+                                    <input type="number" min="0" max="5" 
+                                        class="form-control" id="inputEmail4" name="estrellas" placeholder="5">
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="pr-5">
+                                    <label class="text-primary" for="inputEmail4">Descripcion:</label>
+                                    <input type="text" class="form-control"
+                                        id="inputEmail4" name="descripcion" placeholder="EL mejor hotel del mundo mundial">
+                                </div>
+
+                                <div class="text-right">
+                                    <label class="text-primary text-right" for="inputEmail4">Ubicación:</label>
+                                    <input type="text" min="0" max="5"  class="form-control"
+                                        id="inputEmail4" name="ubicacion" placeholder="Rio Virilla">
+                                </div>
+
+                            </div>
+
+                            <label class="text-primary text-right" for="inputEmail4">Imagen:</label>
+
+                            <div class="custom-file text-light ">
+                                <input type="file" class="custom-file-input" id="customFile" name="file">
+                                <label class="custom-file-label" for="customFile"></label>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Editar</button>
+
+                </form>
+
+            </div>
+
+
+        </div>
+
+        <!-- Footer-->
+
+
+
+</body>
+
+</html>
