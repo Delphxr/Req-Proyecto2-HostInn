@@ -562,9 +562,9 @@ module.exports = {
   },
 
   // Actualizar los datos de un hotel
-  updateHotel: function(id, nombre, estrellas, descripcion, ubicacion){
-    var sql = "UPDATE Hotel SET Nombre = ?, Estrellas = ?, Descripcion = ?, Ubicacion = ? WHERE IdHotel = ?";
-    dbConn.query(sql, [id, nombre, estrellas, descripcion, ubicacion], function (err, result) {
+  updateHotel: function(id, nombre, estrellas, descripcion, ubicacion, imagen){
+    var sql = "UPDATE Hotel SET Nombre = ?, Estrellas = ?, Descripcion = ?, Ubicación = ?, Imagen = ? WHERE IdHotel = ?";
+    dbConn.query(sql, [id, nombre, estrellas, descripcion, ubicacion, imagen], function (err, result) {
       if (err) throw err;
         console.log(result.affectedRows + " record(s) updated");
       });

@@ -1,7 +1,9 @@
 const http = require('http');
 const express = require('express');
+const fs = require("fs");
 const path = require('path');
 const app = express();
+const multer = require("multer");
 
 app.set('view engine', 'ejs');
 app.use(express.json());
@@ -17,6 +19,37 @@ const { JsxEmit } = require('typescript');
 
 // variable para manejar los inicios de secion
 var sesion = { usuario: "", password: "", tipo: 0, id: 0, activo: false }
+
+//funcion para hacer el id de las imagenes que subimos
+function makeid(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * 
+ charactersLength));
+   }
+   return result;
+}
+
+
+
+////////////////////////////////////////////////////////////////////////////////////
+
+const handleError = (err, res) => {
+    res
+        .status(500)
+        .contentType("text/plain")
+        .end("Oops! Something went wrong!" + err);
+};
+
+const upload = multer({
+    dest: path.join(__dirname, "/public/uploads_temp")
+    // you might also want to set some limits: https://github.com/expressjs/multer#limits
+});
+
+//////////////////////////////////////////////////////////////////////////////////////
+
 
 
 //-------------------------------- Controlamos las paginas ------------------------
@@ -341,6 +374,42 @@ app.get('/editar-gerente/:idgerente', function (req, res) {
 });
 
 
+
+// manejamos el gestionar recepcionistas
+app.get('/gestionar-hoteles', function (req, res) {
+
+
+    const value = router.selectHotels(function (err, data) {
+        var hoteles = JSON.parse(JSON.stringify(data));
+
+        console.log(hoteles)
+        if (sesion.activo == true) {
+            res.render(path.join(__dirname + '/views/pages/hoteles.ejs'),
+                { hoteles: hoteles, user: sesion });
+        } else {
+            res.redirect('/log');
+        }
+    });
+});
+
+
+app.get('/editar-hotel/:idHotel', function (req, res) {
+
+    var idHotel = req.params.idHotel
+
+    const value = router.selectHotelUnique(function (err, data) {
+        var hotel = JSON.parse(JSON.stringify(data));
+
+        console.log(hotel)
+        if (sesion.activo == true) {
+            res.render(path.join(__dirname + '/views/pages/editar-hotel.ejs'),
+                { hotel: hotel[0], user: sesion });
+        } else {
+            res.redirect('/log');
+        }
+    },idHotel);
+});
+
 // manejamos registrar un nuevo adminiiador
 app.get('/nuevo-admin/:tipo', function (req, res) {
 
@@ -379,13 +448,45 @@ app.post('/insertar-admin/:tipo', (req, res) => {
     */
     var today = new Date();
 
-    var fechaContratacion = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var fechaContratacion = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 
     console.log(datos, tipo) //si hay mas de un hotel, se reciben como array (SE RECIBE EL ID DEL HOTEL)
 
     //aqui manejamos editar el administrador
     res.redirect('/homepage');
 })
+
+
+
+
+app.post( "/update-hotel", upload.single("file" /* name attribute of <file> element in your form */),
+    (req, res) => {
+        //creamos el nombre de la imagen que estamos subiendo
+
+        const image_name = "image" +  makeid(15);
+        const tempPath = req.file.path;
+        const targetPath = path.join(__dirname, "/public/uploads/" + image_name + ".png");
+
+        if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg") {
+            fs.rename(tempPath, targetPath, err => {
+                if (err) return handleError(err, res);
+
+                res.redirect('/homepage');
+            });
+        } else {
+            fs.unlink(tempPath, err => {
+                if (err) return handleError(err, res);
+
+                res.redirect('/homepage');
+            });
+        }
+
+        var datos = req.body
+        var ruta_imagen = "public/uploads/" + image_name + ".png"
+        router.updateHotel(datos.nombre, datos.estrellas, datos.descripcion, datos.ubicacion, ruta_imagen, datos.idHotel)
+        //el resto
+    }
+);
 // -------------------------------------------------------------------------------
 
 
