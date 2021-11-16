@@ -271,10 +271,10 @@ module.exports = {
   },
 
   // Eliminar habitacion
-  deleteRoom: function (err, idHabitacion){
+  deleteRoom: function (idHabitacion){
     // var id = "'1'"
     // var estado = "'2'"
-    var sql = "UPDATE Habitacion SET Estado = 0 WHERE IdHabitacion = " + idHabitacion;
+    var sql = "UPDATE habitacion SET Estado = 0 WHERE IdHabitacion = " + idHabitacion;
     dbConn.query(sql, function (err, result) {
       if (err) throw err;
         console.log(result.affectedRows + " record(s) updated");
@@ -282,7 +282,7 @@ module.exports = {
   },
 
   // Eliminar hotel
-  deleteHotel: function (err, idHotel){
+  deleteHotel: function (idHotel){
     // var id = "'1'"
     // var estado = "'2'"
     var sql = "UPDATE Hotel SET Estado = 0 WHERE IdHotel = " + idHotel;

@@ -671,6 +671,30 @@ app.post("/insert-room", upload.single("file" /* name attribute of <file> elemen
 );
 
 
+// manejamos el eliminar hotel
+app.get('/eliminar-hotel/:id', function (req, res) {
+
+    var id = req.params.id
+    console.log(id)
+    //manejar aqui la cancelacion
+    router.deleteHotel(id);
+    res.redirect('/homepage');
+
+});
+
+
+// manejamos el eliminar habitacion
+app.get('/eliminar-habitacion/:id', function (req, res) {
+
+    var id = req.params.id
+    console.log(id)
+    //manejar aqui la cancelacion
+    router.deleteRoom(id);
+    res.redirect('/homepage');
+
+});
+
+
 
 // -------------------------------------------------------------------------------
 
