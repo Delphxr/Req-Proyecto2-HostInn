@@ -489,6 +489,17 @@ module.exports = {
             dbConn.query(sql, [fechaInicio, fechaFinal, differentDays * cantidad * parsed1.Precio, parsed2.IdCliente, habitacion, metodo], function (err, result) {
             if (err) throw err;
               console.log("1 record inserted");
+              console.log("-----------------------------------------------------\n"+
+                          "#####################################################\n"+
+                          "#        Correo Electronico de Info@HostInn.com     #\n"+
+                          "#                                                   #\n"+
+                          "# Se ha registrado correctamente su reserva!!!!     #\n"+
+                          "# Fecha llegada: "+ fechaInicio +"                         #\n"+
+                          "# Fecha Salida: "+ fechaFinal +"                          #\n"+
+                          "#####################################################\n"+
+                          "-----------------------------------------------------\n"+
+                          "| Costo: " +  differentDays * cantidad * parsed1.Precio + "\n" + 
+                          "-----------------------------------------------------")
             });
         });
     });

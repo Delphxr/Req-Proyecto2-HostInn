@@ -200,6 +200,8 @@ app.post('/reservacion', (req, res) => {
         edades.push(datos[key])
     }
 
+    
+
     //manejar aqui los datos de la reservacion con la BD
     router.insertReservation(llegada, salida, idCuenta, id_habitacion, 2, cantidad_habitaciones)
     res.redirect('/homepage');
