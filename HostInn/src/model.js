@@ -612,7 +612,7 @@ module.exports = {
   var sql = "CALL insert_admin(?, ?, ?, ?, ?, ?);"
   dbConn.query(sql,[cedula,nombre,fecha,idcuenta,idhotel,idcategoria],function(err, result, fields){
     if (err) throw err;
-      console.log(results[0]);
+      console.log(result);
   });
  },
   
