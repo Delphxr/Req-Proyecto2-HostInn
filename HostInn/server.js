@@ -200,7 +200,7 @@ app.post('/reservacion', (req, res) => {
         edades.push(datos[key])
     }
 
-    
+
 
     //manejar aqui los datos de la reservacion con la BD
     router.insertReservation(llegada, salida, idCuenta, id_habitacion, 2, cantidad_habitaciones)
@@ -212,17 +212,36 @@ app.post('/reservacion', (req, res) => {
 // pagina de historial cliente
 app.get('/history-cliente', function (req, res) {
     var idCliente = sesion.id
-    const value = router.selectReservationByCliente(function (err, data) {
-        var history = JSON.parse(JSON.stringify(data));
+    if (sesion.activo == true) {
 
-        console.log(history)
-        if (sesion.activo == true) {
-            res.render(path.join(__dirname + '/views/pages/historial.ejs'),
-                { historial: history, user: sesion });
-        } else {
-            res.redirect('/log');
+        if (sesion.tipo == 1) {
+
+
+            const value = router.selectReservationByCliente(function (err, data) {
+                var history = JSON.parse(JSON.stringify(data));
+
+                console.log(history)
+
+                res.render(path.join(__dirname + '/views/pages/historial.ejs'),
+                    { historial: history, user: sesion });
+
+            }, idCliente);
         }
-    }, idCliente);
+        else if (sesion.tipo == 4){
+            const value = router.selectReservationByHotel(function (err, data) {
+                var history = JSON.parse(JSON.stringify(data));
+
+                console.log(history)
+
+                res.render(path.join(__dirname + '/views/pages/historial.ejs'),
+                    { historial: history, user: sesion });
+
+            }, idCliente);
+        }
+
+    } else {
+        res.redirect('/log');
+    }
 });
 
 
@@ -559,7 +578,7 @@ app.get('/gestionar-habitaciones/:hotelId', function (req, res) {
         // nota: se recomiendan imagenes con ratio de 3:2
         console.log(habitaciones, hotel)
         res.render(path.join(__dirname + '/views/pages/gestionar-habitaciones.ejs'),
-            { hotel: hotel, habitaciones: habitaciones, user: sesion , idHotel: hotelId});
+            { hotel: hotel, habitaciones: habitaciones, user: sesion, idHotel: hotelId });
         //__dirname : It will resolve to your project folder.
     }, hotelId);
 
@@ -620,7 +639,7 @@ app.post("/update-room", upload.single("file" /* name attribute of <file> elemen
         var ruta_imagen = "public/uploads/" + image_name + ".png"
         console.log(datos)
         //el resto
-        router.updateRoom(datos.nombre, datos.tipo, datos.camas, datos.capacidad,datos.descripcion, datos.precio, ruta_imagen, datos.IdHabitacion)
+        router.updateRoom(datos.nombre, datos.tipo, datos.camas, datos.capacidad, datos.descripcion, datos.precio, ruta_imagen, datos.IdHabitacion)
     }
 );
 
@@ -668,7 +687,7 @@ app.post("/insert-room", upload.single("file" /* name attribute of <file> elemen
         var ruta_imagen = "public/uploads/" + image_name + ".png"
         console.log(datos)
         //el resto
-        router.insertRoom(datos.nombre, datos.tipo, datos.camas, datos.capacidad,datos.descripcion, datos.precio, datos.IdHotel, ruta_imagen)
+        router.insertRoom(datos.nombre, datos.tipo, datos.camas, datos.capacidad, datos.descripcion, datos.precio, datos.IdHotel, ruta_imagen)
     }
 );
 
