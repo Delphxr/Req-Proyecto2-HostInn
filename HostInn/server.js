@@ -147,7 +147,7 @@ app.get('/rooms/:hotelId', function (req, res) {
             hotel = {
                 nombreHotel: 'HOTEL VACIO',
                 descripcionHotel: 'Este hotel no posee habitaciones!',
-                rutaImagen: ""
+                ImagenHotel: ""
             }
         }
 
@@ -393,22 +393,6 @@ app.get('/gestionar-hoteles', function (req, res) {
 });
 
 
-app.get('/editar-hotel/:idHotel', function (req, res) {
-
-    var idHotel = req.params.idHotel
-
-    const value = router.selectHotelUnique(function (err, data) {
-        var hotel = JSON.parse(JSON.stringify(data));
-
-        console.log(hotel)
-        if (sesion.activo == true) {
-            res.render(path.join(__dirname + '/views/pages/editar-hotel.ejs'),
-                { hotel: hotel[0], user: sesion });
-        } else {
-            res.redirect('/log');
-        }
-    }, idHotel);
-});
 
 // manejamos registrar un nuevo adminiiador
 app.get('/nuevo-admin/:tipo', function (req, res) {
@@ -457,8 +441,25 @@ app.post('/insertar-admin/:tipo', (req, res) => {
 })
 
 
+//pagina de editar hotel
+app.get('/editar-hotel/:idHotel', function (req, res) {
 
+    var idHotel = req.params.idHotel
 
+    const value = router.selectHotelUnique(function (err, data) {
+        var hotel = JSON.parse(JSON.stringify(data));
+
+        console.log(hotel)
+        if (sesion.activo == true) {
+            res.render(path.join(__dirname + '/views/pages/editar-hotel.ejs'),
+                { hotel: hotel[0], user: sesion });
+        } else {
+            res.redirect('/log');
+        }
+    }, idHotel);
+});
+
+//respondemos al input de update hotel
 app.post("/update-hotel", upload.single("file" /* name attribute of <file> element in your form */),
     (req, res) => {
         //creamos el nombre de la imagen que estamos subiendo
@@ -488,6 +489,8 @@ app.post("/update-hotel", upload.single("file" /* name attribute of <file> eleme
     }
 );
 
+
+//pagina de nuevo hotel
 app.get('/nuevo-hotel', function (req, res) {
 
     if (sesion.activo == true) {
@@ -500,7 +503,7 @@ app.get('/nuevo-hotel', function (req, res) {
 });
 
 
-
+// respondemos al input de insertar hotel 
 app.post("/insert-hotel", upload.single("file" /* name attribute of <file> element in your form */),
     (req, res) => {
         //creamos el nombre de la imagen que estamos subiendo
@@ -532,6 +535,140 @@ app.post("/insert-hotel", upload.single("file" /* name attribute of <file> eleme
 
 
 
+// sitio habitaciones
+// :hotelId es el parametro con el id del hotel
+app.get('/gestionar-habitaciones/:hotelId', function (req, res) {
+
+    var hotelId = req.params.hotelId
+
+    const value = router.selectRoomsUnique(function (err, data) {
+        var habitaciones = JSON.parse(JSON.stringify(data));
+
+        var hotel = habitaciones[0]
+
+        if (habitaciones.length == 0) {
+            hotel = {
+                nombreHotel: 'HOTEL VACIO',
+                descripcionHotel: 'Este hotel no posee habitaciones!',
+                ImagenHotel: ""
+            }
+        }
+
+        // nota: se recomiendan imagenes con ratio de 3:2
+        console.log(habitaciones, hotel)
+        res.render(path.join(__dirname + '/views/pages/gestionar-habitaciones.ejs'),
+            { hotel: hotel, habitaciones: habitaciones, user: sesion , idHotel: hotelId});
+        //__dirname : It will resolve to your project folder.
+    }, hotelId);
+
+});
+
+//editamos una habitacion
+// :hotelId es el parametro con el id del hotel
+app.get('/editar-habitacion/:roomID', function (req, res) {
+
+    var roomID = req.params.roomID
+
+    const value = router.selectOneRoom(function (err, data) {
+        var habitaciones = JSON.parse(JSON.stringify(data));
+
+        var hotel = habitaciones[0]
+
+        if (habitaciones.length == 0) {
+            hotel = {
+                nombreHotel: 'HOTEL VACIO',
+                descripcionHotel: 'Este hotel no posee habitaciones!',
+                ImagenHotel: ""
+            }
+        }
+
+        // nota: se recomiendan imagenes con ratio de 3:2
+
+        res.render(path.join(__dirname + '/views/pages/editar-habitacion.ejs'),
+            { hotel: hotel, habitacion: habitaciones[0], user: sesion });
+        //__dirname : It will resolve to your project folder.
+    }, roomID);
+
+});
+
+//respondemos al input de update room
+app.post("/update-room", upload.single("file" /* name attribute of <file> element in your form */),
+    (req, res) => {
+        //creamos el nombre de la imagen que estamos subiendo
+
+        const image_name = "image" + makeid(15);
+        const tempPath = req.file.path;
+        const targetPath = path.join(__dirname, "/public/uploads/" + image_name + ".png");
+
+        if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg") {
+            fs.rename(tempPath, targetPath, err => {
+                if (err) return handleError(err, res);
+
+                res.redirect('/homepage');
+            });
+        } else {
+            fs.unlink(tempPath, err => {
+                if (err) return handleError(err, res);
+
+                res.redirect('/homepage');
+            });
+        }
+
+        var datos = req.body
+        var ruta_imagen = "public/uploads/" + image_name + ".png"
+        console.log(datos)
+        //el resto
+        router.updateRoom(datos.nombre, datos.tipo, datos.camas, datos.capacidad,datos.descripcion, datos.precio, ruta_imagen, datos.IdHabitacion)
+    }
+);
+
+
+// :hotelId es el parametro con el id del hotel
+app.get('/nueva-habitacion/:hotelID', function (req, res) {
+
+    var hotelID = req.params.hotelID
+
+    if (sesion.activo == true) {
+        res.render(path.join(__dirname + '/views/pages/insertar-habitacion.ejs'),
+            { user: sesion, hotel: hotelID });
+    }
+    else {
+        res.redirect('/log');
+    }
+
+});
+
+
+//respondemos al input de insert room
+app.post("/insert-room", upload.single("file" /* name attribute of <file> element in your form */),
+    (req, res) => {
+        //creamos el nombre de la imagen que estamos subiendo
+
+        const image_name = "image" + makeid(15);
+        const tempPath = req.file.path;
+        const targetPath = path.join(__dirname, "/public/uploads/" + image_name + ".png");
+
+        if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg") {
+            fs.rename(tempPath, targetPath, err => {
+                if (err) return handleError(err, res);
+
+                res.redirect('/homepage');
+            });
+        } else {
+            fs.unlink(tempPath, err => {
+                if (err) return handleError(err, res);
+
+                res.redirect('/homepage');
+            });
+        }
+
+        var datos = req.body
+        var ruta_imagen = "public/uploads/" + image_name + ".png"
+        console.log(datos)
+        //el resto
+        router.insertRoom(datos.nombre, datos.tipo, datos.camas, datos.capacidad,datos.descripcion, datos.precio, datos.IdHotel, ruta_imagen)
+    }
+);
 
 
 

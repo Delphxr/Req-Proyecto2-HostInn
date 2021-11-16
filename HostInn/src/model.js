@@ -402,9 +402,9 @@ module.exports = {
   },
 
   // Insertar una habitacion
-  insertRoom: function(nombre, tipo, numCamas, capacidad, descripcion, precio, hotel){
-    var sql = "INSERT INTO Habitacion (Nombre, Tipo, Num_Camas, Capacidad, Descripcion, Precio, Hotel_IdHotel) VALUES (? , ?, ?, ?, ?, ?)";
-    dbConn.query(sql, [nombre, tipo, numCamas, capacidad, descripcion, precio, hotel], function (err, result) {
+  insertRoom: function(nombre, tipo, numCamas, capacidad, descripcion, precio, hotel, imagen){
+    var sql = "INSERT INTO Habitacion (Nombre, Tipo, Num_Camas, Capacidad, Descripcion, Precio, Hotel_IdHotel, Imagen, Estado) VALUES (? , ?, ?, ?, ?, ?, ?,?, 1)";
+    dbConn.query(sql, [nombre, tipo, numCamas, capacidad, descripcion, precio, hotel, imagen], function (err, result) {
       if (err) throw err;
         console.log("1 record inserted");
     });
@@ -553,9 +553,9 @@ module.exports = {
   },
 
   // Actualizar los datos de una habitacion
-  updateRoom: function(id, nombre, tipo, numCamas, capacidad, descripcion, precio){
-    var sql = "UPDATE Habitacion SET Nombre = ?, Tipo = ?, Num_camas = ?, Capacidad = ?, Descripcion = ?, Precio = ? WHERE IdHabitacion = ?";
-    dbConn.query(sql, [id, nombre, tipo, numCamas, capacidad, descripcion, precio], function (err, result) {
+  updateRoom: function(id, nombre, tipo, numCamas, capacidad, descripcion, precio, imagen){
+    var sql = "UPDATE Habitacion SET Nombre = ?, Tipo = ?, Num_camas = ?, Capacidad = ?, Descripcion = ?, Precio = ?, Imagen = ? WHERE IdHabitacion = ?";
+    dbConn.query(sql, [id, nombre, tipo, numCamas, capacidad, descripcion, precio, imagen], function (err, result) {
       if (err) throw err;
         console.log(result.affectedRows + " record(s) updated");
       });

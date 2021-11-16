@@ -11,27 +11,14 @@
     <%- include('../partials/header',{user : user}); %>
 
 
-
-        <div class="bgimg-3" style="background-image: url(<%='http://localhost:3000/' + hotel.ImagenHotel %>); min-height: 60vh;"></div>
-
-
-
         <!-- Section about -->
         <section class="py-5 shadoww" id="about"
             style="background-image:  linear-gradient(120deg, #ffda3e 0%, #ffd630 100%); ">
             <div class="container px-4 py-5">
 
-                <h1 class="text-dark display-1 strong"><%= hotel.nombreHotel %>:</h1>
+                <h1 class="text-dark display-1 strong">Habitaciones:</h1>
 
-                <h4 class="lead" style=" position:relative; z-index: 50;">
-                    <%= hotel.descripcionHotel %>
-                </h4>
-
-                <h5 style=" position:relative; z-index: 50;">
-                    Ubicación: <%= hotel.Ubicación_hotel %>
-                </h5>
-
-
+   
             </div>
 
 
@@ -81,13 +68,34 @@
                                 </div>
 
                                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                    <div class="text-left"><a class="btn btn-primary mt-auto" href="/reserve/<%= habitacion.IdHabitacion %>">Reservar</a>
+                                    <div class="text-left"><a class="btn btn-primary mt-auto" href="/editar-habitacion/<%=habitacion.IdHabitacion%>">Editar</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <% } %>
                     <% }); %>
+
+                    <div class="col mb-5">
+                        <div class="card text-white bg-dark mb-3 shadoww border-0 rounded-0">
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-left">
+                                    <h5 class="fw-bolder text-primary">
+                                        Nueva Habitacion
+                                    </h5>
+                                    <!-- Direccion del hotel-->
+                                    .....
+
+                                </div>
+                            </div>
+
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-left"><a class="btn btn-primary mt-auto" href="/nueva-habitacion/<%=idHotel%>">Nuevo</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
 
 
