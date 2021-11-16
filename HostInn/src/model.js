@@ -605,7 +605,17 @@ module.exports = {
         console.log(result.affectedRows + " record(s) updated");
       });
   },
-
+  
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// SP
+  spInsertAdmin: function(cedula,nombre,fecha,idcuenta,idhotel,idcategoria){
+  var sql = "CALL insert_admin(?, ?, ?, ?, ?, ?);"
+  dbConn.query(sql,[cedula,nombre,fecha,idcuenta,idhotel,idcategoria],function(err, result, fields){
+    if (err) throw err;
+      console.log(results[0]);
+  });
+ },
+  
   selectHotels,
   selectAdmin,
   selectClient,
