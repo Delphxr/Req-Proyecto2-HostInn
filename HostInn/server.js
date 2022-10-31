@@ -203,7 +203,7 @@ app.post('/reservacion', (req, res) => {
 
 
     //manejar aqui los datos de la reservacion con la BD
-    router.insertReservation(llegada, salida, idCuenta, id_habitacion, 2, cantidad_habitaciones)
+    router.insertReservation(llegada, salida, idCuenta, id_habitacion, 1, cantidad_habitaciones)
     res.redirect('/homepage');
 })
 

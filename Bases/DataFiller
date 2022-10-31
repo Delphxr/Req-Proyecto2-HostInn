@@ -1,0 +1,266 @@
+-- queries datos iniciales
+
+ -- ////////////////////////////////////////////////////////
+INSERT INTO `hostinn`.`hotel`
+(`Nombre`,
+`Estrellas`,
+`Descripcion`,
+`Ubicación`,
+`Estado`)
+VALUES
+("Hotel Feo",
+1,
+"Un hotel en chepe centro, huele a meados",
+"chepe",
+1);
+
+INSERT INTO `hostinn`.`habitacion`
+(`Nombre`,
+`Tipo`,
+`Num_Camas`,
+`Capacidad`,
+`Descripcion`,
+`Precio`,
+`Estado`,
+`Hotel_IdHotel`)
+VALUES
+("Suite de 2 Camas",
+"Suite ejecutiva",
+2,
+4,
+"Habitación amplia con capacidad para 4 personas, vista a la avenida central desde ventana",
+15000,
+1,
+1);
+
+
+
+INSERT INTO `hostinn`.`hotel`
+(`Nombre`,
+`Estrellas`,
+`Descripcion`,
+`Ubicación`,
+`Estado`)
+VALUES
+("Hotel bonito",
+4,
+"Un hotel bonito, pero no tanto",
+"Guanacaste",
+1);
+
+INSERT INTO `hostinn`.`habitacion`
+(`Nombre`,
+`Tipo`,
+`Num_Camas`,
+`Capacidad`,
+`Descripcion`,
+`Precio`,
+`Estado`,
+`Hotel_IdHotel`)
+VALUES
+("Cuarto Familiar",
+"Basico",
+4,
+5,
+"Habitación para toda la familia, cuenta con aire acondicionado y una refri",
+30000,
+1,
+2);
+
+
+-- ******************
+
+INSERT INTO `hostinn`.`categoria`
+(`IdCategoria`,
+`Categoria`)
+VALUES
+(1,
+"Usuario");
+
+INSERT INTO `hostinn`.`categoria`
+(`IdCategoria`,
+`Categoria`)
+VALUES
+(2,
+"Gerente Hotel");
+
+INSERT INTO `hostinn`.`categoria`
+(`IdCategoria`,
+`Categoria`)
+VALUES
+(3,
+"Ejecutivo");
+
+INSERT INTO `hostinn`.`categoria`
+(`IdCategoria`,
+`Categoria`)
+VALUES
+(4,
+"Recepcionista");
+
+-- //////////////////
+
+ INSERT INTO `hostinn`.`cuenta`
+(`Username`,
+`Contraseña`,
+`Estado`,
+`Categoria_IdCategoria`)
+VALUES
+("client",
+"1234",
+1,
+1);
+
+
+INSERT INTO `hostinn`.`cliente`
+(`Nombre`,
+`Apeliidos`,
+`Correo`,
+`Nacionalidad`,
+`FechaNacimiento`,
+`Cuenta_IdCuenta`)
+VALUES
+("Chechito",
+"Palenco",
+"cpalen@gmail.com",
+"costarica",
+"2012-05-01",
+1);
+
+INSERT INTO `hostinn`.`metodo de pago`
+(`Tipo`)
+VALUES
+("Efectivo");
+
+INSERT INTO `hostinn`.`tarjeta`
+(`NumTarjeta`,
+`TarjetaHabitante`,
+`CCV`,
+`FechaCaducidad`,
+`Estado`,
+`Cliente_IdCliente`,
+`Metodo de pago_IdMetodo`)
+VALUES
+(231233546,
+"Pepito",
+236,
+"2023-12-12",
+1,
+1,
+1);
+
+INSERT INTO `hostinn`.`metodo de pago_has_cliente`
+(`Cliente_IdCliente`,
+`Metodo de pago_IdMetodo`)
+VALUES
+(1,
+1);
+
+
+-- ////////////////////////
+ INSERT INTO `hostinn`.`cuenta`
+(`Username`,
+`Contraseña`,
+`Estado`,
+`Categoria_IdCategoria`)
+VALUES
+("gerente",
+"1234",
+1,
+2);
+
+INSERT INTO `hostinn`.`administrador`
+(
+`Cedula`,
+`Nombre`,
+`FechaContratacion`,
+`Cuenta_IdCuenta`)
+VALUES
+(4000000,
+"pepito",
+"2012-05-01",
+2);
+
+INSERT INTO `hostinn`.`gerente`
+(`Descripcion`,
+`Hotel_IdHotel`,
+`Administrador_IdAdministrador`)
+VALUES
+("Gerente del hotel feo en chepe",
+1,
+1);
+
+ -- ////////////////////////////////////////////////////////
+ 
+  INSERT INTO `hostinn`.`cuenta`
+(`Username`,
+`Contraseña`,
+`Estado`,
+`Categoria_IdCategoria`)
+VALUES
+("ejecutivo",
+"1234",
+1,
+3);
+INSERT INTO `hostinn`.`administrador`
+(
+`Cedula`,
+`Nombre`,
+`FechaContratacion`,
+`Cuenta_IdCuenta`)
+VALUES
+(4000000,
+"John Salchichon",
+"2012-05-01",
+3);
+
+INSERT INTO `hostinn`.`gerente_alto_nivel`
+(`Descripcion`,
+`Administrador_IdAdministrador`)
+VALUES
+("Dueño de franquicia",
+2);
+
+INSERT INTO `hostinn`.`gerente_alto_nivel_has_hotel`
+(`Gerente_Alto_Nivel_IdGerente_Alto_Nivel`,
+`Hotel_IdHotel`)
+VALUES
+(1,
+1);
+
+-- ///////////////////////////////////////
+
+ INSERT INTO `hostinn`.`cuenta`
+(`Username`,
+`Contraseña`,
+`Estado`,
+`Categoria_IdCategoria`)
+VALUES
+("recepcionista",
+"1234",
+1,
+4);
+
+INSERT INTO `hostinn`.`administrador`
+(
+`Cedula`,
+`Nombre`,
+`FechaContratacion`,
+`Cuenta_IdCuenta`)
+VALUES
+(4000000,
+"William Shakespeare",
+"2012-05-01",
+4);
+
+INSERT INTO `hostinn`.`recepcionista`
+(`Descripcion`,
+`Hotel_IdHotel`,
+`Administrador_IdAdministrador`)
+VALUES
+("recepcionista del hotel feo",
+1,
+3);
+
+
+

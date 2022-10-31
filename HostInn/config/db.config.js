@@ -1,10 +1,10 @@
 'use strict';
-var mysql = require('mysql');
+var mysql = require('mysql2');
 //local mysql db connection
 const dbConn = mysql.createConnection({
-  host     : '25.6.225.17',
+  host     : 'localhost',
   user     : 'root',
-  password : 'password',
+  password : 'ramifer5',
   database : 'hostinn'
 });
 

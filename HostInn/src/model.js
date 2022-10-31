@@ -176,7 +176,7 @@ function selectReceptionistById (callback, id){
 
 // Seleccionar recepcionistas 
 function selectReceptionistbyGerente (callback, id){ 
-  dbConn.query("select recepcionista.IdRecepcionista ,recepcionista.Administrador_IdAdministrador as idAdminRecepcionista, hotel.nombre as nombre_hotel, (SELECT Nombre from administrador where administrador.IdAdministrador = idAdminRecepcionista limit 1) as nombre_recepcionista  from recepcionista inner join hotel on hotel.IdHotel = recepcionista.Hotel_IdHotel inner join gerente on hotel.IdHotel = Gerente.Hotel_IdHotel inner join administrador on gerente.Administrador_IdAdministrador = administrador.idAdministrador where administrador.Cuenta_IdCuenta = 1", function (err, result) { 
+  dbConn.query("select recepcionista.IdRecepcionista ,recepcionista.Administrador_IdAdministrador as idAdminRecepcionista, hotel.nombre as nombre_hotel, (SELECT Nombre from administrador where administrador.IdAdministrador = idAdminRecepcionista limit 1) as nombre_recepcionista  from recepcionista inner join hotel on hotel.IdHotel = recepcionista.Hotel_IdHotel inner join gerente on hotel.IdHotel = Gerente.Hotel_IdHotel inner join administrador on gerente.Administrador_IdAdministrador = administrador.idAdministrador where administrador.Cuenta_IdCuenta = " + id, function (err, result) { 
   if (err) 
     callback(err, null); 
   else 
